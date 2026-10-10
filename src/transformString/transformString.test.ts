@@ -12,7 +12,7 @@ describe('transformString', () => {
     ).toBe('hello world');
   });
 
-  it('マップ変換: toHiragana', () => {
+  it('テーブル変換: toHiragana', () => {
     expect(transformString('アイウ', [TransformationType.toHiragana])).toBe(
       'あいう',
     );
@@ -27,12 +27,12 @@ describe('transformString', () => {
     ).toBe('あいう');
   });
 
-  describe('composeMap', () => {
+  describe('composeTables', () => {
     it('mapをため込んで最後にまとめて適用する', () => {
       const result = transformString(
         'アイウ',
         [TransformationType.toHiragana, TransformationType.toHiragana],
-        { composeMap: true },
+        { composeTables: true },
       );
       expect(result).toBe('あいう');
     });
@@ -41,7 +41,7 @@ describe('transformString', () => {
       const result = transformString(
         'アイウ',
         [TransformationType.toHiragana, TransformationType.toLowerCase],
-        { composeMap: true },
+        { composeTables: true },
       );
       expect(result).toBe('あいう');
     });

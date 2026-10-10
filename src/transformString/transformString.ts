@@ -1,10 +1,10 @@
 import { clearArray } from '@fringeworks/utils/array/clearArray';
 import { isBlank } from '@fringeworks/utils/type/isBlank';
-import type { ReplacementMapDefinition } from '../retype';
-import { retype } from '../retype';
+import type { ConversionTable } from '../convertByTable';
+import { convertByTable } from '../convertByTable';
 import {
   TRANSFORMATION_FUNCTIONS,
-  TRANSFORMATION_MAPS,
+  TRANSFORMATION_TABLES,
 } from './_transformations';
 import type { TransformationType } from './constants';
 import type { TransformStringOptions } from './types';
@@ -35,33 +35,33 @@ function _transformString(
     return str;
   }
 
-  const { composeMap } = options;
-  const maps: ReplacementMapDefinition[] = [];
+  const { composeTables } = options;
+  const tables: ConversionTable[] = [];
   const lastIndex = types.length - 1;
   return types.reduce((result, type, index) => {
     const fn = TRANSFORMATION_FUNCTIONS[type];
     if (fn) {
-      if (composeMap && maps.length) {
-        // composeMap=trueの場合はため込んだmapsの処理を先に行う
-        result = retype(result, clearArray(maps));
+      if (composeTables && tables.length) {
+        // composeTables=trueの場合はため込んだtablesの処理を先に行う
+        result = convertByTable(result, clearArray(tables));
       }
       // 変換関数で変換
       return fn(result);
     }
-    const mapDefiniton = TRANSFORMATION_MAPS[type];
-    if (mapDefiniton) {
-      // mapで変換
-      if (composeMap) {
-        // composeMap=trueの場合はmapsにため込む
-        maps.push(mapDefiniton);
+    const table = TRANSFORMATION_TABLES[type];
+    if (table) {
+      // 変換テーブルで変換
+      if (composeTables) {
+        // composeTables=trueの場合はtablesにため込む
+        tables.push(table);
       } else {
         // 即変換
-        return retype(result, [mapDefiniton]);
+        return convertByTable(result, [table]);
       }
     }
-    if (composeMap && maps.length && lastIndex === index) {
-      // composeMap=trueで最後の要素の場合はため込んだmapsの処理を行う
-      return retype(result, maps);
+    if (composeTables && tables.length && lastIndex === index) {
+      // composeTables=trueで最後の要素の場合はため込んだtablesの処理を行う
+      return convertByTable(result, tables);
     }
     return result;
   }, str);

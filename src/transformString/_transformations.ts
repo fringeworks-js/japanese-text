@@ -6,7 +6,11 @@ import { recaseScreamingSnake } from '@fringeworks/utils/string/recaseScreamingS
 import { recaseSnake } from '@fringeworks/utils/string/recaseSnake';
 import { recaseTitle } from '@fringeworks/utils/string/recaseTitle';
 import { recaseUpper } from '@fringeworks/utils/string/recaseUpper';
-import type { ReplacementMapDefinition } from '../retype';
+import type { ConversionTable } from '../convertByTable';
+import { REMOVE_CHOUON } from '../removeChouon/constants';
+import { REMOVE_LINE_BREAKS } from '../removeLineBreaks/constants';
+import { REMOVE_SPACES } from '../removeSpaces/constants';
+import { REMOVE_WHITESPACE } from '../removeWhitespace/constants';
 import {
   TO_FULL_WIDTH,
   TO_FULL_WIDTH_ALPHABET,
@@ -14,7 +18,7 @@ import {
   TO_FULL_WIDTH_NUMBER,
   TO_FULL_WIDTH_SIGN,
   TO_FULL_WIDTH_SPACE,
-} from '../retypeToFullWidth/constants';
+} from '../toFullWidth/constants';
 import {
   TO_HALF_WIDTH,
   TO_HALF_WIDTH_ALPHABET,
@@ -22,36 +26,32 @@ import {
   TO_HALF_WIDTH_NUMBER,
   TO_HALF_WIDTH_SIGN,
   TO_HALF_WIDTH_SPACE,
-} from '../retypeToHalfWidth/constants';
-import { TO_HIRAGANA } from '../retypeToHiragana/constants';
+} from '../toHalfWidth/constants';
+import { TO_HIRAGANA } from '../toHiragana/constants';
 import {
   TO_HIRAGANA_SEION,
   TO_HIRAGANA_SEION_FROM_DAKUON,
   TO_HIRAGANA_SEION_FROM_SOKUON,
   TO_HIRAGANA_SEION_FROM_YOUON,
-} from '../retypeToHiraganaSeion/constants';
-import { TO_KATAKANA } from '../retypeToKatakana/constants';
+} from '../toHiraganaSeion/constants';
+import { TO_KATAKANA } from '../toKatakana/constants';
 import {
   TO_KATAKANA_SEION,
   TO_KATAKANA_SEION_FROM_DAKUON,
   TO_KATAKANA_SEION_FROM_SOKUON,
   TO_KATAKANA_SEION_FROM_YOUON,
-} from '../retypeToKatakanaSeion/constants';
-import { retypeToNfc } from '../retypeToNfc';
-import { retypeToNfd } from '../retypeToNfd';
-import { retypeToNfkc } from '../retypeToNfkc';
-import { retypeToNfkd } from '../retypeToNfkd';
-import { TO_NO_CHOUON } from '../retypeToNoChouon/constants';
-import { TO_NO_LINE_FEED } from '../retypeToNoLineFeed/constants';
-import { TO_NO_SPACE } from '../retypeToNoSpace/constants';
-import { TO_NO_WHITESPACE } from '../retypeToNoWhitespace/constants';
+} from '../toKatakanaSeion/constants';
+import { toNfc } from '../toNfc';
+import { toNfd } from '../toNfd';
+import { toNfkc } from '../toNfkc';
+import { toNfkd } from '../toNfkd';
 import type { TransformationType } from './constants';
 
 /**
- * マップで置換する変換の種類と、置換に使うマップ
+ * 変換テーブルで変換する変換の種類と、変換に使うテーブル
  */
-export const TRANSFORMATION_MAPS: Partial<
-  Record<TransformationType, ReplacementMapDefinition>
+export const TRANSFORMATION_TABLES: Partial<
+  Record<TransformationType, ConversionTable>
 > = {
   [TO_FULL_WIDTH.id]: TO_FULL_WIDTH,
   [TO_FULL_WIDTH_ALPHABET.id]: TO_FULL_WIDTH_ALPHABET,
@@ -75,10 +75,10 @@ export const TRANSFORMATION_MAPS: Partial<
   [TO_KATAKANA_SEION_FROM_DAKUON.id]: TO_KATAKANA_SEION_FROM_DAKUON,
   [TO_KATAKANA_SEION_FROM_SOKUON.id]: TO_KATAKANA_SEION_FROM_SOKUON,
   [TO_KATAKANA_SEION_FROM_YOUON.id]: TO_KATAKANA_SEION_FROM_YOUON,
-  [TO_NO_CHOUON.id]: TO_NO_CHOUON,
-  [TO_NO_LINE_FEED.id]: TO_NO_LINE_FEED,
-  [TO_NO_WHITESPACE.id]: TO_NO_WHITESPACE,
-  [TO_NO_SPACE.id]: TO_NO_SPACE,
+  [REMOVE_CHOUON.id]: REMOVE_CHOUON,
+  [REMOVE_LINE_BREAKS.id]: REMOVE_LINE_BREAKS,
+  [REMOVE_WHITESPACE.id]: REMOVE_WHITESPACE,
+  [REMOVE_SPACES.id]: REMOVE_SPACES,
 };
 
 /**
@@ -95,8 +95,8 @@ export const TRANSFORMATION_FUNCTIONS: Partial<
   toSnakeCase: recaseSnake,
   toTitleCase: recaseTitle,
   toUpperCase: recaseUpper,
-  toNfc: retypeToNfc,
-  toNfd: retypeToNfd,
-  toNfkc: retypeToNfkc,
-  toNfkd: retypeToNfkd,
+  toNfc: toNfc,
+  toNfd: toNfd,
+  toNfkc: toNfkc,
+  toNfkd: toNfkd,
 };

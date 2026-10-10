@@ -59,15 +59,15 @@ describe('normalizeString', () => {
     });
   });
 
-  describe('ignoreLineFeed', () => {
+  describe('ignoreLineBreak', () => {
     it('改行を除去する', () => {
-      expect(normalizeString('hello\nworld', { ignoreLineFeed: true })).toBe(
+      expect(normalizeString('hello\nworld', { ignoreLineBreak: true })).toBe(
         'helloworld',
       );
     });
 
     it('CRLFを除去する', () => {
-      expect(normalizeString('hello\r\nworld', { ignoreLineFeed: true })).toBe(
+      expect(normalizeString('hello\r\nworld', { ignoreLineBreak: true })).toBe(
         'helloworld',
       );
     });

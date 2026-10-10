@@ -35,6 +35,7 @@ const fn = normalizeString.dataLast({ ignoreKana: true });
 
 | Function                                      | Description                                                               |
 | --------------------------------------------- | ------------------------------------------------------------------------- |
+| `convertByTable(str, tables)`                 | Converts text according to conversion tables                              |
 | `getShiftJisByteLength(str)`                  | Returns the byte length of a string in Shift_JIS                          |
 | `isFullWidth(str, options?)`                  | Checks whether a string consists only of full-width characters            |
 | `isHalfWidth(str, options?)`                  | Checks whether a string consists only of half-width characters            |
@@ -42,19 +43,36 @@ const fn = normalizeString.dataLast({ ignoreKana: true });
 | `isShiftJisDoubleByte(str)`                   | Checks whether a string consists only of Shift_JIS double-byte characters |
 | `isShiftJisSingleByte(str)`                   | Checks whether a string consists only of Shift_JIS single-byte characters |
 | `normalizeString(value, options?)`            | Removes variations in notation to make strings comparable                 |
-| `retype(str, definitions)`                    | Replaces text according to replacement map definitions                    |
-| `retypeToFullWidth(str, options?)`            | Converts half-width characters to full-width                              |
-| `retypeToHalfWidth(str, options?)`            | Converts full-width characters to half-width                              |
-| `retypeToHiragana(str)`                       | Converts katakana to hiragana                                             |
-| `retypeToHiraganaSeion(str, options?)`        | Converts voiced, small, and geminate hiragana to their plain forms        |
-| `retypeToKatakana(str)`                       | Converts hiragana to katakana                                             |
-| `retypeToKatakanaSeion(str, options?)`        | Converts voiced, small, and geminate katakana to their plain forms        |
-| `retypeToNfc(data)`, ...                      | Applies Unicode normalization                                             |
-| `retypeToNoChouon(str)`                       | Removes the prolonged sound mark (`ー`)                                   |
-| `retypeToNoLineFeed(str)`                     | Removes line breaks                                                       |
-| `retypeToNoSpace(str)`                        | Removes half-width and full-width spaces                                  |
-| `retypeToNoWhitespace(str)`                   | Removes whitespace other than line breaks                                 |
+| `removeChouon(str)`                           | Removes the prolonged sound mark (`ー`)                                   |
+| `removeLineBreaks(str)`                       | Removes line breaks                                                       |
+| `removeSpaces(str)`                           | Removes half-width and full-width spaces                                  |
+| `removeWhitespace(str)`                       | Removes whitespace other than line breaks                                 |
+| `toFullWidth(str, options?)`                  | Converts half-width characters to full-width                              |
+| `toHalfWidth(str, options?)`                  | Converts full-width characters to half-width                              |
+| `toHiragana(str)`                             | Converts katakana to hiragana                                             |
+| `toHiraganaSeion(str, options?)`              | Converts voiced, small, and geminate hiragana to their plain forms        |
+| `toKatakana(str)`                             | Converts hiragana to katakana                                             |
+| `toKatakanaSeion(str, options?)`              | Converts voiced, small, and geminate katakana to their plain forms        |
+| `toNfc(data)`, ...                            | Applies Unicode normalization                                             |
 | `transformString(str, types, options?)`       | Applies several conversions in order                                      |
+
+### `convertByTable`
+
+```ts
+convertByTable(str: string, tables: ConversionTable | ConversionTable[]): string
+```
+
+Converts text according to conversion tables. Several tables are merged into one before conversion. Merged tables and converters are cached by `id`, so always use the same `entries` for the same `id`.
+
+```ts
+convertByTable('abc', {
+  id: 'myTable',
+  entries: [
+    ['a', 'A'],
+    ['b', 'B'],
+  ],
+}); // 'ABc'
+```
 
 ### `getShiftJisByteLength`
 
@@ -167,139 +185,121 @@ normalizeString('㈱ｶﾞ', { ignoreCompatibility: true }); // '(株)ガ'
 | `ignoreSokuon?`        | `boolean` | Ignores the small `っ` versus the plain `つ`                                                                                       |
 | `ignoreYouon?`         | `boolean` | Ignores small kana (`ゃ`) versus the plain form (`や`)                                                                             |
 | `ignoreChouon?`        | `boolean` | Ignores the prolonged sound mark (`ー`)                                                                                            |
-| `ignoreLineFeed?`      | `boolean` | Ignores line breaks (CR, LF, and the Unicode line and paragraph separators)                                                        |
+| `ignoreLineBreak?`     | `boolean` | Ignores line breaks (CR, LF, and the Unicode line and paragraph separators)                                                        |
 | `ignoreSpace?`         | `boolean` | Ignores whitespace other than line breaks (half-width and full-width spaces, tabs, no-break spaces, ...)                           |
 | `nullValue?`           | `string`  | The value returned when `value` is `null`                                                                                          |
 | `undefinedValue?`      | `string`  | The value returned when `value` is `undefined`                                                                                     |
 
-### `retype`
+### `removeChouon`
 
 ```ts
-retype(str: string, definitions: ReplacementMapDefinition | ReplacementMapDefinition[]): string
+removeChouon(str: string): string
 ```
 
-Replaces text according to replacement map definitions. Several definitions are merged into one map. Merged maps and replacers are cached by `id`, so always use the same map for the same `id`.
+Removes the prolonged sound mark (`ー`).
+
+### `removeLineBreaks`
 
 ```ts
-retype('abc', {
-  id: 'myMap',
-  map: [
-    ['a', 'A'],
-    ['b', 'B'],
-  ],
-}); // 'ABc'
+removeLineBreaks(str: string): string
 ```
 
-### `retypeToFullWidth`
+Removes line breaks (CR, LF, CRLF, and the Unicode line separator U+2028 and paragraph separator U+2029).
+
+### `removeSpaces`
 
 ```ts
-retypeToFullWidth(str: string, options?: RetypeToFullWidthOptions): string
-retypeToFullWidth.dataLast(options?: RetypeToFullWidthOptions): (str: string) => string
+removeSpaces(str: string): string
+```
+
+Removes half-width and full-width spaces. Use `removeWhitespace` to remove other whitespace such as tabs as well.
+
+### `removeWhitespace`
+
+```ts
+removeWhitespace(str: string): string
+```
+
+Removes whitespace other than line breaks (half-width and full-width spaces, tabs, no-break spaces, spaces of various widths, and so on). Use `removeLineBreaks` to remove line breaks.
+
+### `toFullWidth`
+
+```ts
+toFullWidth(str: string, options?: ToFullWidthOptions): string
+toFullWidth.dataLast(options?: ToFullWidthOptions): (str: string) => string
 ```
 
 Converts half-width letters, digits, symbols, spaces, and katakana to full-width.
 
 ```ts
-retypeToFullWidth('abc 123 ｱｲｳ'); // 'ａｂｃ　１２３　アイウ'
-retypeToFullWidth('abc 123', { disableNumber: true }); // 'ａｂｃ　123'
+toFullWidth('abc 123 ｱｲｳ'); // 'ａｂｃ　１２３　アイウ'
+toFullWidth('abc 123', { keepNumber: true }); // 'ａｂｃ　123'
 ```
 
-| Option             | Type      | Description                          |
-| ------------------ | --------- | ------------------------------------ |
-| `disableAlphabet?` | `boolean` | If `true`, letters are not converted |
-| `disableNumber?`   | `boolean` | If `true`, digits are not converted  |
-| `disableSign?`     | `boolean` | If `true`, symbols are not converted |
-| `disableSpace?`    | `boolean` | If `true`, spaces are not converted  |
-| `disableKana?`     | `boolean` | If `true`, katakana is not converted |
+| Option          | Type      | Description                       |
+| --------------- | --------- | --------------------------------- |
+| `keepAlphabet?` | `boolean` | If `true`, letters are kept as is |
+| `keepNumber?`   | `boolean` | If `true`, digits are kept as is  |
+| `keepSign?`     | `boolean` | If `true`, symbols are kept as is |
+| `keepSpace?`    | `boolean` | If `true`, spaces are kept as is  |
+| `keepKana?`     | `boolean` | If `true`, katakana is kept as is |
 
-### `retypeToHalfWidth`
+### `toHalfWidth`
 
 ```ts
-retypeToHalfWidth(str: string, options?: RetypeToHalfWidthOptions): string
+toHalfWidth(str: string, options?: ToHalfWidthOptions): string
 ```
 
-Converts full-width letters, digits, symbols, spaces, and katakana to half-width. The options are the same as `retypeToFullWidth`.
+Converts full-width letters, digits, symbols, spaces, and katakana to half-width. The options are the same as `toFullWidth`.
 
-### `retypeToHiragana` / `retypeToKatakana`
+### `toHiragana` / `toKatakana`
 
 ```ts
-retypeToHiragana(str: string): string
-retypeToHiragana.dataLast(): (str: string) => string
-retypeToKatakana(str: string): string
+toHiragana(str: string): string
+toHiragana.dataLast(): (str: string) => string
+toKatakana(str: string): string
 ```
 
-Converts katakana to hiragana (`retypeToHiragana`) or hiragana to katakana (`retypeToKatakana`).
+Converts katakana to hiragana (`toHiragana`) or hiragana to katakana (`toKatakana`).
 
-### `retypeToHiraganaSeion` / `retypeToKatakanaSeion`
+### `toHiraganaSeion` / `toKatakanaSeion`
 
 ```ts
-retypeToHiraganaSeion(str: string, options?: RetypeToHiraganaSeionOptions): string
-retypeToKatakanaSeion(str: string, options?: RetypeToKatakanaSeionOptions): string
+toHiraganaSeion(str: string, options?: ToHiraganaSeionOptions): string
+toKatakanaSeion(str: string, options?: ToKatakanaSeionOptions): string
 ```
 
-Converts voiced and semi-voiced kana, the small `っ`, and other small kana in hiragana (`retypeToHiraganaSeion`) or katakana (`retypeToKatakanaSeion`) to their plain forms.
+Converts voiced and semi-voiced kana, the small `っ`, and other small kana in hiragana (`toHiraganaSeion`) or katakana (`toKatakanaSeion`) to their plain forms.
 
 ```ts
-retypeToHiraganaSeion('がっこう'); // 'かつこう'
-retypeToKatakanaSeion('ガッコウ', { disableSokuon: true }); // 'カッコウ'
+toHiraganaSeion('がっこう'); // 'かつこう'
+toKatakanaSeion('ガッコウ', { keepSokuon: true }); // 'カッコウ'
 ```
 
-| Option           | Type      | Description                                                                |
-| ---------------- | --------- | -------------------------------------------------------------------------- |
-| `disableDakuon?` | `boolean` | If `true`, voiced and semi-voiced kana (`が`, `ぱ`, ...) are not converted |
-| `disableSokuon?` | `boolean` | If `true`, the small `っ` is not converted                                 |
-| `disableYouon?`  | `boolean` | If `true`, other small kana (`ゃ`, `ぁ`, ...) are not converted            |
+| Option        | Type      | Description                                                             |
+| ------------- | --------- | ----------------------------------------------------------------------- |
+| `keepDakuon?` | `boolean` | If `true`, voiced and semi-voiced kana (`が`, `ぱ`, ...) are kept as is |
+| `keepSokuon?` | `boolean` | If `true`, the small `っ` is kept as is                                 |
+| `keepYouon?`  | `boolean` | If `true`, other small kana (`ゃ`, `ぁ`, ...) are kept as is            |
 
 ### Unicode normalization
 
 ```ts
-retypeToNfc(data: string): string
-retypeToNfd(data: string): string
-retypeToNfkc(data: string): string
-retypeToNfkd(data: string): string
+toNfc(data: string): string
+toNfd(data: string): string
+toNfkc(data: string): string
+toNfkd(data: string): string
 // each also has dataLast(): (data: string) => string
 ```
 
 Applies Unicode normalization with `String.prototype.normalize`.
 
-| Function       | Form | Example                                      |
-| -------------- | ---- | -------------------------------------------- |
-| `retypeToNfc`  | NFC  | `か` + combining voiced mark → `が`          |
-| `retypeToNfd`  | NFD  | `が` → `か` + combining voiced mark          |
-| `retypeToNfkc` | NFKC | `１２３` → `123`, `ｶﾞ` → `ガ`, `㈱` → `(株)` |
-| `retypeToNfkd` | NFKD | `ｶﾞ` → `カ` + combining voiced mark          |
-
-### `retypeToNoChouon`
-
-```ts
-retypeToNoChouon(str: string): string
-```
-
-Removes the prolonged sound mark (`ー`).
-
-### `retypeToNoLineFeed`
-
-```ts
-retypeToNoLineFeed(str: string): string
-```
-
-Removes line breaks (CR, LF, CRLF, and the Unicode line separator U+2028 and paragraph separator U+2029).
-
-### `retypeToNoSpace`
-
-```ts
-retypeToNoSpace(str: string): string
-```
-
-Removes half-width and full-width spaces. Use `retypeToNoWhitespace` to remove other whitespace such as tabs as well.
-
-### `retypeToNoWhitespace`
-
-```ts
-retypeToNoWhitespace(str: string): string
-```
-
-Removes whitespace other than line breaks (half-width and full-width spaces, tabs, no-break spaces, spaces of various widths, and so on). Use `retypeToNoLineFeed` to remove line breaks.
+| Function | Form | Example                                      |
+| -------- | ---- | -------------------------------------------- |
+| `toNfc`  | NFC  | `か` + combining voiced mark → `が`          |
+| `toNfd`  | NFD  | `が` → `か` + combining voiced mark          |
+| `toNfkc` | NFKC | `１２３` → `123`, `ｶﾞ` → `ガ`, `㈱` → `(株)` |
+| `toNfkd` | NFKD | `ｶﾞ` → `カ` + combining voiced mark          |
 
 ### `transformString`
 
@@ -322,13 +322,13 @@ The available conversions (values of `TransformationType`) are:
 | Full-width / half-width | `toFullWidth`, `toFullWidthAlphabet`, `toFullWidthNumber`, `toFullWidthSign`, `toFullWidthSpace`, `toFullWidthKana`, `toHalfWidth`, and the matching `toHalfWidth*` |
 | Hiragana / katakana     | `toHiragana`, `toKatakana`                                                                                                                                          |
 | Plain forms             | `toHiraganaSeion`, `toHiraganaSeionFromDakuon`, `toHiraganaSeionFromSokuon`, `toHiraganaSeionFromYouon`, and the matching `toKatakanaSeion*`                        |
-| Removal                 | `toNoChouon`, `toNoLineFeed`, `toNoSpace`, `toNoWhitespace`                                                                                                         |
+| Removal                 | `removeChouon`, `removeLineBreaks`, `removeSpaces`, `removeWhitespace`                                                                                              |
 | Case                    | `toCamelCase`, `toKebabCase`, `toLowerCase`, `toPascalCase`, `toScreamingSnakeCase`, `toSnakeCase`, `toTitleCase`, `toUpperCase`                                    |
 | Unicode normalization   | `toNfc`, `toNfd`, `toNfkc`, `toNfkd`                                                                                                                                |
 
-| Option        | Type      | Description                                                                                                                                       |
-| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `composeMap?` | `boolean` | If `true`, consecutive map-based conversions are merged into one map. This is faster, but some combinations of conversions give different results |
+| Option           | Type      | Description                                                                                                                                           |
+| ---------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `composeTables?` | `boolean` | If `true`, consecutive table-based conversions are merged into one table. This is faster, but some combinations of conversions give different results |
 
 ### Constants
 
@@ -338,20 +338,20 @@ The available conversions (values of `TransformationType`) are:
 
 ### Types
 
-| Type                           | Description                                                                 |
-| ------------------------------ | --------------------------------------------------------------------------- |
-| `AmbiguousWidth`               | How to treat characters of ambiguous width: `'full'`, `'half'`, `'neither'` |
-| `IsFullWidthOptions`           | Options for `isFullWidth`                                                   |
-| `IsHalfWidthOptions`           | Same as `IsFullWidthOptions`                                                |
-| `IsNormalizedEqualOptions`     | Options for `isNormalizedEqual`                                             |
-| `NormalizeStringOptions`       | Options for `normalizeString`                                               |
-| `ReplacementMapDefinition`     | A replacement map definition for `retype` `{ id, map }`                     |
-| `RetypeToFullWidthOptions`     | Options for `retypeToFullWidth`                                             |
-| `RetypeToHalfWidthOptions`     | Same as `RetypeToFullWidthOptions`                                          |
-| `RetypeToKatakanaSeionOptions` | Options for `retypeToKatakanaSeion`                                         |
-| `RetypeToHiraganaSeionOptions` | Same as `RetypeToKatakanaSeionOptions`                                      |
-| `TransformationType`           | The conversion values for `transformString`                                 |
-| `TransformStringOptions`       | Options for `transformString`                                               |
+| Type                       | Description                                                                 |
+| -------------------------- | --------------------------------------------------------------------------- |
+| `AmbiguousWidth`           | How to treat characters of ambiguous width: `'full'`, `'half'`, `'neither'` |
+| `ConversionTable`          | A conversion table for `convertByTable` `{ id, entries }`                   |
+| `IsFullWidthOptions`       | Options for `isFullWidth`                                                   |
+| `IsHalfWidthOptions`       | Same as `IsFullWidthOptions`                                                |
+| `IsNormalizedEqualOptions` | Options for `isNormalizedEqual`                                             |
+| `NormalizeStringOptions`   | Options for `normalizeString`                                               |
+| `ToFullWidthOptions`       | Options for `toFullWidth`                                                   |
+| `ToHalfWidthOptions`       | Same as `ToFullWidthOptions`                                                |
+| `ToKatakanaSeionOptions`   | Options for `toKatakanaSeion`                                               |
+| `ToHiraganaSeionOptions`   | Same as `ToKatakanaSeionOptions`                                            |
+| `TransformationType`       | The conversion values for `transformString`                                 |
+| `TransformStringOptions`   | Options for `transformString`                                               |
 
 ## License
 

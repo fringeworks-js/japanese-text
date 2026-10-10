@@ -35,6 +35,7 @@ const fn = normalizeString.dataLast({ ignoreKana: true });
 
 | 関数                                          | 説明                                                  |
 | --------------------------------------------- | ----------------------------------------------------- |
+| `convertByTable(str, tables)`                 | 変換テーブルに従って文字列を変換する                  |
 | `getShiftJisByteLength(str)`                  | Shift_JIS で表した場合のバイト数を返す                |
 | `isFullWidth(str, options?)`                  | 全角の文字だけで構成されているか判定する              |
 | `isHalfWidth(str, options?)`                  | 半角の文字だけで構成されているか判定する              |
@@ -42,19 +43,36 @@ const fn = normalizeString.dataLast({ ignoreKana: true });
 | `isShiftJisDoubleByte(str)`                   | Shift_JIS の2バイト文字だけで構成されているか判定する |
 | `isShiftJisSingleByte(str)`                   | Shift_JIS の1バイト文字だけで構成されているか判定する |
 | `normalizeString(value, options?)`            | 表記の揺れを無くし、比較できる形にする                |
-| `retype(str, definitions)`                    | 変換マップの定義に従って文字列を置換する              |
-| `retypeToFullWidth(str, options?)`            | 半角の文字を全角にする                                |
-| `retypeToHalfWidth(str, options?)`            | 全角の文字を半角にする                                |
-| `retypeToHiragana(str)`                       | カタカナをひらがなにする                              |
-| `retypeToHiraganaSeion(str, options?)`        | ひらがなの濁音・半濁音・促音・拗音を清音にする        |
-| `retypeToKatakana(str)`                       | ひらがなをカタカナにする                              |
-| `retypeToKatakanaSeion(str, options?)`        | カタカナの濁音・半濁音・促音・拗音を清音にする        |
-| `retypeToNfc(data)` など                      | Unicode 正規化を行う                                  |
-| `retypeToNoChouon(str)`                       | 長音符（`ー`）を削除する                              |
-| `retypeToNoLineFeed(str)`                     | 改行を削除する                                        |
-| `retypeToNoSpace(str)`                        | 半角スペース・全角スペースを削除する                  |
-| `retypeToNoWhitespace(str)`                   | 改行以外の空白文字を削除する                          |
+| `removeChouon(str)`                           | 長音符（`ー`）を削除する                              |
+| `removeLineBreaks(str)`                       | 改行を削除する                                        |
+| `removeSpaces(str)`                           | 半角スペース・全角スペースを削除する                  |
+| `removeWhitespace(str)`                       | 改行以外の空白文字を削除する                          |
+| `toFullWidth(str, options?)`                  | 半角の文字を全角にする                                |
+| `toHalfWidth(str, options?)`                  | 全角の文字を半角にする                                |
+| `toHiragana(str)`                             | カタカナをひらがなにする                              |
+| `toHiraganaSeion(str, options?)`              | ひらがなの濁音・半濁音・促音・拗音を清音にする        |
+| `toKatakana(str)`                             | ひらがなをカタカナにする                              |
+| `toKatakanaSeion(str, options?)`              | カタカナの濁音・半濁音・促音・拗音を清音にする        |
+| `toNfc(data)` など                            | Unicode 正規化を行う                                  |
 | `transformString(str, types, options?)`       | 複数の変換を順番に適用する                            |
+
+### `convertByTable`
+
+```ts
+convertByTable(str: string, tables: ConversionTable | ConversionTable[]): string
+```
+
+変換テーブルに従って文字列を変換します。複数のテーブルを指定した場合は1つにまとめて変換します。まとめたテーブルと変換の処理は `id` ごとにキャッシュするため、同じ `id` には常に同じ `entries` を指定します。
+
+```ts
+convertByTable('abc', {
+  id: 'myTable',
+  entries: [
+    ['a', 'A'],
+    ['b', 'B'],
+  ],
+}); // 'ABc'
+```
 
 ### `getShiftJisByteLength`
 
@@ -167,139 +185,121 @@ normalizeString('㈱ｶﾞ', { ignoreCompatibility: true }); // '(株)ガ'
 | `ignoreSokuon?`        | `boolean` | 促音（`っ`）と清音（`つ`）の違いを無視する                                                              |
 | `ignoreYouon?`         | `boolean` | 拗音（`ゃ`）と清音（`や`）の違いを無視する                                                              |
 | `ignoreChouon?`        | `boolean` | 長音符（`ー`）を無視する                                                                                |
-| `ignoreLineFeed?`      | `boolean` | 改行（CR、LF、Unicode の行区切り・段落区切り）を無視する                                                |
+| `ignoreLineBreak?`     | `boolean` | 改行（CR、LF、Unicode の行区切り・段落区切り）を無視する                                                |
 | `ignoreSpace?`         | `boolean` | 改行以外の空白文字（半角・全角スペース、タブ、ノーブレークスペースなど）を無視する                      |
 | `nullValue?`           | `string`  | `value` が `null` の場合に返す値                                                                        |
 | `undefinedValue?`      | `string`  | `value` が `undefined` の場合に返す値                                                                   |
 
-### `retype`
+### `removeChouon`
 
 ```ts
-retype(str: string, definitions: ReplacementMapDefinition | ReplacementMapDefinition[]): string
+removeChouon(str: string): string
 ```
 
-変換マップの定義に従って文字列を置換します。複数の定義を指定した場合は1つのマップにまとめて置換します。合成したマップと置換の処理は `id` ごとにキャッシュするため、同じ `id` には常に同じマップを指定します。
+長音符（`ー`）を削除します。
+
+### `removeLineBreaks`
 
 ```ts
-retype('abc', {
-  id: 'myMap',
-  map: [
-    ['a', 'A'],
-    ['b', 'B'],
-  ],
-}); // 'ABc'
+removeLineBreaks(str: string): string
 ```
 
-### `retypeToFullWidth`
+改行（CR、LF、CRLF、Unicode の行区切り U+2028・段落区切り U+2029）を削除します。
+
+### `removeSpaces`
 
 ```ts
-retypeToFullWidth(str: string, options?: RetypeToFullWidthOptions): string
-retypeToFullWidth.dataLast(options?: RetypeToFullWidthOptions): (str: string) => string
+removeSpaces(str: string): string
+```
+
+半角スペースと全角スペースを削除します。タブなどの他の空白文字も削除する場合は `removeWhitespace` を使います。
+
+### `removeWhitespace`
+
+```ts
+removeWhitespace(str: string): string
+```
+
+改行以外の空白文字（半角・全角スペース、タブ、ノーブレークスペース、各種の幅のスペースなど）を削除します。改行の削除には `removeLineBreaks` を使います。
+
+### `toFullWidth`
+
+```ts
+toFullWidth(str: string, options?: ToFullWidthOptions): string
+toFullWidth.dataLast(options?: ToFullWidthOptions): (str: string) => string
 ```
 
 半角の英字・数字・記号・スペース・カタカナを全角にします。
 
 ```ts
-retypeToFullWidth('abc 123 ｱｲｳ'); // 'ａｂｃ　１２３　アイウ'
-retypeToFullWidth('abc 123', { disableNumber: true }); // 'ａｂｃ　123'
+toFullWidth('abc 123 ｱｲｳ'); // 'ａｂｃ　１２３　アイウ'
+toFullWidth('abc 123', { keepNumber: true }); // 'ａｂｃ　123'
 ```
 
-| オプション         | 型        | 説明                                |
-| ------------------ | --------- | ----------------------------------- |
-| `disableAlphabet?` | `boolean` | `true` の場合、英字を変換しない     |
-| `disableNumber?`   | `boolean` | `true` の場合、数字を変換しない     |
-| `disableSign?`     | `boolean` | `true` の場合、記号を変換しない     |
-| `disableSpace?`    | `boolean` | `true` の場合、スペースを変換しない |
-| `disableKana?`     | `boolean` | `true` の場合、カタカナを変換しない |
+| オプション      | 型        | 説明                                    |
+| --------------- | --------- | --------------------------------------- |
+| `keepAlphabet?` | `boolean` | `true` の場合、英字を変換せずに残す     |
+| `keepNumber?`   | `boolean` | `true` の場合、数字を変換せずに残す     |
+| `keepSign?`     | `boolean` | `true` の場合、記号を変換せずに残す     |
+| `keepSpace?`    | `boolean` | `true` の場合、スペースを変換せずに残す |
+| `keepKana?`     | `boolean` | `true` の場合、カタカナを変換せずに残す |
 
-### `retypeToHalfWidth`
+### `toHalfWidth`
 
 ```ts
-retypeToHalfWidth(str: string, options?: RetypeToHalfWidthOptions): string
+toHalfWidth(str: string, options?: ToHalfWidthOptions): string
 ```
 
-全角の英字・数字・記号・スペース・カタカナを半角にします。オプションは `retypeToFullWidth` と同じです。
+全角の英字・数字・記号・スペース・カタカナを半角にします。オプションは `toFullWidth` と同じです。
 
-### `retypeToHiragana` / `retypeToKatakana`
+### `toHiragana` / `toKatakana`
 
 ```ts
-retypeToHiragana(str: string): string
-retypeToHiragana.dataLast(): (str: string) => string
-retypeToKatakana(str: string): string
+toHiragana(str: string): string
+toHiragana.dataLast(): (str: string) => string
+toKatakana(str: string): string
 ```
 
-カタカナをひらがなに（`retypeToHiragana`）、ひらがなをカタカナに（`retypeToKatakana`）します。
+カタカナをひらがなに（`toHiragana`）、ひらがなをカタカナに（`toKatakana`）します。
 
-### `retypeToHiraganaSeion` / `retypeToKatakanaSeion`
+### `toHiraganaSeion` / `toKatakanaSeion`
 
 ```ts
-retypeToHiraganaSeion(str: string, options?: RetypeToHiraganaSeionOptions): string
-retypeToKatakanaSeion(str: string, options?: RetypeToKatakanaSeionOptions): string
+toHiraganaSeion(str: string, options?: ToHiraganaSeionOptions): string
+toKatakanaSeion(str: string, options?: ToKatakanaSeionOptions): string
 ```
 
-ひらがな（`retypeToHiraganaSeion`）・カタカナ（`retypeToKatakanaSeion`）の濁音・半濁音・促音・拗音を清音にします。
+ひらがな（`toHiraganaSeion`）・カタカナ（`toKatakanaSeion`）の濁音・半濁音・促音・拗音を清音にします。
 
 ```ts
-retypeToHiraganaSeion('がっこう'); // 'かつこう'
-retypeToKatakanaSeion('ガッコウ', { disableSokuon: true }); // 'カッコウ'
+toHiraganaSeion('がっこう'); // 'かつこう'
+toKatakanaSeion('ガッコウ', { keepSokuon: true }); // 'カッコウ'
 ```
 
-| オプション       | 型        | 説明                                                           |
-| ---------------- | --------- | -------------------------------------------------------------- |
-| `disableDakuon?` | `boolean` | `true` の場合、濁音・半濁音（`が`、`ぱ` など）を変換しない     |
-| `disableSokuon?` | `boolean` | `true` の場合、促音（`っ`）を変換しない                        |
-| `disableYouon?`  | `boolean` | `true` の場合、拗音・小書き文字（`ゃ`、`ぁ` など）を変換しない |
+| オプション    | 型        | 説明                                                               |
+| ------------- | --------- | ------------------------------------------------------------------ |
+| `keepDakuon?` | `boolean` | `true` の場合、濁音・半濁音（`が`、`ぱ` など）を変換せずに残す     |
+| `keepSokuon?` | `boolean` | `true` の場合、促音（`っ`）を変換せずに残す                        |
+| `keepYouon?`  | `boolean` | `true` の場合、拗音・小書き文字（`ゃ`、`ぁ` など）を変換せずに残す |
 
 ### Unicode 正規化
 
 ```ts
-retypeToNfc(data: string): string
-retypeToNfd(data: string): string
-retypeToNfkc(data: string): string
-retypeToNfkd(data: string): string
+toNfc(data: string): string
+toNfd(data: string): string
+toNfkc(data: string): string
+toNfkd(data: string): string
 // いずれも dataLast(): (data: string) => string を持つ
 ```
 
 `String.prototype.normalize` で Unicode 正規化を行います。
 
-| 関数           | 正規化形式 | 例                                           |
-| -------------- | ---------- | -------------------------------------------- |
-| `retypeToNfc`  | NFC        | `か` + 結合用濁点 → `が`                     |
-| `retypeToNfd`  | NFD        | `が` → `か` + 結合用濁点                     |
-| `retypeToNfkc` | NFKC       | `１２３` → `123`、`ｶﾞ` → `ガ`、`㈱` → `(株)` |
-| `retypeToNfkd` | NFKD       | `ｶﾞ` → `カ` + 結合用濁点                     |
-
-### `retypeToNoChouon`
-
-```ts
-retypeToNoChouon(str: string): string
-```
-
-長音符（`ー`）を削除します。
-
-### `retypeToNoLineFeed`
-
-```ts
-retypeToNoLineFeed(str: string): string
-```
-
-改行（CR、LF、CRLF、Unicode の行区切り U+2028・段落区切り U+2029）を削除します。
-
-### `retypeToNoSpace`
-
-```ts
-retypeToNoSpace(str: string): string
-```
-
-半角スペースと全角スペースを削除します。タブなどの他の空白文字も削除する場合は `retypeToNoWhitespace` を使います。
-
-### `retypeToNoWhitespace`
-
-```ts
-retypeToNoWhitespace(str: string): string
-```
-
-改行以外の空白文字（半角・全角スペース、タブ、ノーブレークスペース、各種の幅のスペースなど）を削除します。改行の削除には `retypeToNoLineFeed` を使います。
+| 関数     | 正規化形式 | 例                                           |
+| -------- | ---------- | -------------------------------------------- |
+| `toNfc`  | NFC        | `か` + 結合用濁点 → `が`                     |
+| `toNfd`  | NFD        | `が` → `か` + 結合用濁点                     |
+| `toNfkc` | NFKC       | `１２３` → `123`、`ｶﾞ` → `ガ`、`㈱` → `(株)` |
+| `toNfkd` | NFKD       | `ｶﾞ` → `カ` + 結合用濁点                     |
 
 ### `transformString`
 
@@ -322,13 +322,13 @@ transformString('hello world', [TransformationType.toPascalCase]); // 'HelloWorl
 | 全角・半角         | `toFullWidth`、`toFullWidthAlphabet`、`toFullWidthNumber`、`toFullWidthSign`、`toFullWidthSpace`、`toFullWidthKana`、`toHalfWidth` と、同様の `toHalfWidth*` |
 | ひらがな・カタカナ | `toHiragana`、`toKatakana`                                                                                                                                   |
 | 清音               | `toHiraganaSeion`、`toHiraganaSeionFromDakuon`、`toHiraganaSeionFromSokuon`、`toHiraganaSeionFromYouon` と、同様の `toKatakanaSeion*`                        |
-| 削除               | `toNoChouon`、`toNoLineFeed`、`toNoSpace`、`toNoWhitespace`                                                                                                  |
+| 削除               | `removeChouon`、`removeLineBreaks`、`removeSpaces`、`removeWhitespace`                                                                                       |
 | ケース             | `toCamelCase`、`toKebabCase`、`toLowerCase`、`toPascalCase`、`toScreamingSnakeCase`、`toSnakeCase`、`toTitleCase`、`toUpperCase`                             |
 | Unicode 正規化     | `toNfc`、`toNfd`、`toNfkc`、`toNfkd`                                                                                                                         |
 
-| オプション    | 型        | 説明                                                                                                                                             |
-| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `composeMap?` | `boolean` | `true` の場合、マップで置換する変換が続く部分を1つのマップにまとめて置換する。処理は速くなるが、変換の組み合わせによっては結果が変わることがある |
+| オプション       | 型        | 説明                                                                                                                                                 |
+| ---------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `composeTables?` | `boolean` | `true` の場合、変換テーブルを使う変換が続く部分を1つのテーブルにまとめて変換する。処理は速くなるが、変換の組み合わせによっては結果が変わることがある |
 
 ### 定数
 
@@ -338,20 +338,20 @@ transformString('hello world', [TransformationType.toPascalCase]); // 'HelloWorl
 
 ### 型
 
-| 型                             | 説明                                                  |
-| ------------------------------ | ----------------------------------------------------- |
-| `AmbiguousWidth`               | 幅が曖昧な文字の扱い。`'full'`、`'half'`、`'neither'` |
-| `IsFullWidthOptions`           | `isFullWidth` のオプション                            |
-| `IsHalfWidthOptions`           | `IsFullWidthOptions` と同じ                           |
-| `IsNormalizedEqualOptions`     | `isNormalizedEqual` のオプション                      |
-| `NormalizeStringOptions`       | `normalizeString` のオプション                        |
-| `ReplacementMapDefinition`     | `retype` の変換マップの定義 `{ id, map }`             |
-| `RetypeToFullWidthOptions`     | `retypeToFullWidth` のオプション                      |
-| `RetypeToHalfWidthOptions`     | `RetypeToFullWidthOptions` と同じ                     |
-| `RetypeToKatakanaSeionOptions` | `retypeToKatakanaSeion` のオプション                  |
-| `RetypeToHiraganaSeionOptions` | `RetypeToKatakanaSeionOptions` と同じ                 |
-| `TransformationType`           | `transformString` の変換の種類の値                    |
-| `TransformStringOptions`       | `transformString` のオプション                        |
+| 型                         | 説明                                                  |
+| -------------------------- | ----------------------------------------------------- |
+| `AmbiguousWidth`           | 幅が曖昧な文字の扱い。`'full'`、`'half'`、`'neither'` |
+| `ConversionTable`          | `convertByTable` の変換テーブル `{ id, entries }`     |
+| `IsFullWidthOptions`       | `isFullWidth` のオプション                            |
+| `IsHalfWidthOptions`       | `IsFullWidthOptions` と同じ                           |
+| `IsNormalizedEqualOptions` | `isNormalizedEqual` のオプション                      |
+| `NormalizeStringOptions`   | `normalizeString` のオプション                        |
+| `ToFullWidthOptions`       | `toFullWidth` のオプション                            |
+| `ToHalfWidthOptions`       | `ToFullWidthOptions` と同じ                           |
+| `ToKatakanaSeionOptions`   | `toKatakanaSeion` のオプション                        |
+| `ToHiraganaSeionOptions`   | `ToKatakanaSeionOptions` と同じ                       |
+| `TransformationType`       | `transformString` の変換の種類の値                    |
+| `TransformStringOptions`   | `transformString` のオプション                        |
 
 ## ライセンス
 

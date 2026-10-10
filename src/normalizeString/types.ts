@@ -60,7 +60,7 @@ export type NormalizeStringOptions = {
   /**
    * 改行（CR、LF、Unicodeの行区切り・段落区切り）を無視する
    */
-  ignoreLineFeed?: boolean;
+  ignoreLineBreak?: boolean;
 
   /**
    * 改行以外の空白文字（半角・全角スペース、タブ、ノーブレークスペースなど）を無視する

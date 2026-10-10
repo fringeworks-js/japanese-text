@@ -34,7 +34,7 @@ function _normalizeString(
       ignoreSokuon,
       ignoreYouon,
       ignoreChouon,
-      ignoreLineFeed,
+      ignoreLineBreak,
       ignoreSpace,
     } = options;
     const transformationTypes: TransformationType[] = [];
@@ -89,17 +89,17 @@ function _normalizeString(
 
     if (ignoreChouon) {
       // 長音(ー)を無視する
-      transformationTypes.push(TransformationType.toNoChouon);
+      transformationTypes.push(TransformationType.removeChouon);
     }
 
-    if (ignoreLineFeed) {
+    if (ignoreLineBreak) {
       // 改行を無視する
-      transformationTypes.push(TransformationType.toNoLineFeed);
+      transformationTypes.push(TransformationType.removeLineBreaks);
     }
 
     if (ignoreSpace) {
       // スペースを無視する
-      transformationTypes.push(TransformationType.toNoWhitespace);
+      transformationTypes.push(TransformationType.removeWhitespace);
     }
 
     return transformString(value, transformationTypes);

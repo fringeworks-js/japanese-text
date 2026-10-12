@@ -15,7 +15,7 @@ const replacers = new WeakMap<Map<string, string>, (str: string) => string>();
 
 export default function convertByTable(
   str: string,
-  tables: ConversionTable | ConversionTable[],
+  tables: ConversionTable | (ConversionTable | false | null | undefined)[],
 ): string {
   if (isBlank(str)) {
     return str;

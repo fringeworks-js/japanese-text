@@ -27,6 +27,19 @@ describe('normalizeString', () => {
     it('半角はそのまま', () => {
       expect(normalizeString('abc', { ignoreWidth: true })).toBe('abc');
     });
+
+    it('ignoreKana と組み合わせると、半角・全角のカタカナとひらがながそろう', () => {
+      const options = { ignoreWidth: true, ignoreKana: true };
+      expect(normalizeString('ｱｶﾞﾊﾟｰ', options)).toBe('あがぱー');
+      expect(normalizeString('アガパー', options)).toBe('あがぱー');
+      expect(normalizeString('あがぱー', options)).toBe('あがぱー');
+    });
+
+    it('ignoreKana と組み合わせても、英数字・記号・空白は半角にそろえる', () => {
+      expect(
+        normalizeString('Ａ１－　', { ignoreWidth: true, ignoreKana: true }),
+      ).toBe('A1- ');
+    });
   });
 
   describe('ignoreChouon', () => {
@@ -170,6 +183,108 @@ describe('normalizeString', () => {
       expect(normalizeString('が', { ignoreComposition: true })).toBe('が');
     });
   });
+  describe('ignoreDakuon の濁点・半濁点', () => {
+    it('結合用の濁点・半濁点を除去する', () => {
+      expect(normalizeString('か\u3099は\u309a', { ignoreDakuon: true })).toBe(
+        'かは',
+      );
+    });
+
+    it('単独の濁点・半濁点を除去する', () => {
+      expect(normalizeString('か゛は゜ｶﾞﾊﾟ', { ignoreDakuon: true })).toBe(
+        'かはｶﾊ',
+      );
+    });
+
+    it('濁音の後ろに残った半濁点も除去する', () => {
+      expect(
+        normalizeString('パ\u309a', {
+          ignoreComposition: true,
+          ignoreDakuon: true,
+        }),
+      ).toBe('ハ');
+    });
+  });
+
+  describe('2回適用しても結果が変わらない', () => {
+    it('空白を除去して隣り合った濁点を合成する', () => {
+      expect(
+        normalizeString('か \u3099', {
+          ignoreComposition: true,
+          ignoreSpace: true,
+        }),
+      ).toBe('が');
+    });
+
+    it('互換文字の濁点から生じた空白を除去しても濁点が残らない', () => {
+      expect(
+        normalizeString('か゛', {
+          ignoreCompatibility: true,
+          ignoreSpace: true,
+          ignoreDakuon: true,
+        }),
+      ).toBe('か');
+    });
+
+    it('促音を清音にした後に残った濁点を合成する', () => {
+      expect(
+        normalizeString('っ\u3099', {
+          ignoreComposition: true,
+          ignoreSokuon: true,
+        }),
+      ).toBe('づ');
+    });
+
+    it('長音を除去して隣り合った濁点を合成し、ひらがなにする', () => {
+      expect(
+        normalizeString('カー\u3099', {
+          ignoreComposition: true,
+          ignoreKana: true,
+          ignoreChouon: true,
+        }),
+      ).toBe('が');
+    });
+
+    const OPTION_NAMES = [
+      'ignoreCompatibility',
+      'ignoreComposition',
+      'ignoreWidth',
+      'ignoreCase',
+      'ignoreKana',
+      'ignoreDakuon',
+      'ignoreSokuon',
+      'ignoreYouon',
+      'ignoreChouon',
+      'ignoreLineBreak',
+      'ignoreSpace',
+    ] as const;
+    const SAMPLES = [
+      'か゛',
+      'か \u3099',
+      'パ\u309a',
+      'っ\u3099',
+      'ゃ\u309a',
+      'カー\u3099',
+      'ウ\n\u3099',
+      'ｶ ﾞﾊﾟｯｬｰ',
+      'ガッコー　ＡＢＣ',
+      'İß㍿ヷゝゞ',
+      'ﾟİ゜İ',
+    ];
+
+    it.each(SAMPLES)('すべてのオプションの組み合わせ: %s', (sample) => {
+      for (let bits = 0; bits < 1 << OPTION_NAMES.length; bits++) {
+        const options = Object.fromEntries(
+          OPTION_NAMES.map((name, i) => [name, (bits & (1 << i)) !== 0]),
+        );
+        const once = normalizeString(sample, options);
+        expect(normalizeString(once, options), JSON.stringify(options)).toBe(
+          once,
+        );
+      }
+    });
+  });
+
   describe('dataLast', () => {
     it('基本動作', () => {
       expect(normalizeString.dataLast({ ignoreCase: true })('Hello')).toBe(

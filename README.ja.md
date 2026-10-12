@@ -59,10 +59,10 @@ const fn = normalizeString.dataLast({ ignoreKana: true });
 ### `convertByTable`
 
 ```ts
-convertByTable(str: string, tables: ConversionTable | ConversionTable[]): string
+convertByTable(str: string, tables: ConversionTable | (ConversionTable | false | null | undefined)[]): string
 ```
 
-変換テーブルに従って文字列を変換します。複数のテーブルを指定した場合は1つにまとめて変換します。まとめたテーブルと変換の処理は `id` ごとにキャッシュするため、同じ `id` には常に同じ `entries` を指定します。
+変換テーブルに従って文字列を変換します。複数のテーブルを指定した場合は1つにまとめて変換します。配列の中の `false`・`null`・`undefined` は無視するので、`[useKana && TO_HIRAGANA]` のように条件付きでテーブルを並べられます。まとめたテーブルと変換の処理は `id` ごとにキャッシュするため、同じ `id` には常に同じ `entries` を指定します。
 
 ```ts
 convertByTable('abc', {
@@ -174,21 +174,21 @@ normalizeString('ガッコウ', {
 normalizeString('㈱ｶﾞ', { ignoreCompatibility: true }); // '(株)ガ'
 ```
 
-| オプション             | 型        | 説明                                                                                                    |
-| ---------------------- | --------- | ------------------------------------------------------------------------------------------------------- |
-| `ignoreCompatibility?` | `boolean` | 互換文字の違いを無視する（NFKC で正規化する）。指定した場合は `ignoreComposition`・`ignoreWidth` は不要 |
-| `ignoreComposition?`   | `boolean` | 合成文字と分解された文字の違いを無視する（NFC で正規化する）                                            |
-| `ignoreWidth?`         | `boolean` | 全角・半角の違いを無視する（半角にそろえる）                                                            |
-| `ignoreCase?`          | `boolean` | 英字の大文字・小文字の違いを無視する（小文字にそろえる）                                                |
-| `ignoreKana?`          | `boolean` | ひらがな・カタカナの違いを無視する（ひらがなにそろえる）                                                |
-| `ignoreDakuon?`        | `boolean` | 濁音（`ば`）・半濁音（`ぱ`）と清音（`は`）の違いを無視する                                              |
-| `ignoreSokuon?`        | `boolean` | 促音（`っ`）と清音（`つ`）の違いを無視する                                                              |
-| `ignoreYouon?`         | `boolean` | 拗音（`ゃ`）と清音（`や`）の違いを無視する                                                              |
-| `ignoreChouon?`        | `boolean` | 長音符（`ー`）を無視する                                                                                |
-| `ignoreLineBreak?`     | `boolean` | 改行（CR、LF、Unicode の行区切り・段落区切り）を無視する                                                |
-| `ignoreSpace?`         | `boolean` | 改行以外の空白文字（半角・全角スペース、タブ、ノーブレークスペースなど）を無視する                      |
-| `nullValue?`           | `string`  | `value` が `null` の場合に返す値                                                                        |
-| `undefinedValue?`      | `string`  | `value` が `undefined` の場合に返す値                                                                   |
+| オプション             | 型        | 説明                                                                                                                    |
+| ---------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `ignoreCompatibility?` | `boolean` | 互換文字の違いを無視する（NFKC で正規化する）。指定した場合は `ignoreComposition`・`ignoreWidth` は不要                 |
+| `ignoreComposition?`   | `boolean` | 合成文字と分解された文字の違いを無視する（NFC で正規化する）                                                            |
+| `ignoreWidth?`         | `boolean` | 全角・半角の違いを無視する（半角にそろえる。`ignoreKana` と組み合わせた場合、かなは全角にそろえてからひらがなにする）   |
+| `ignoreCase?`          | `boolean` | 英字の大文字・小文字の違いを無視する（小文字にそろえる）                                                                |
+| `ignoreKana?`          | `boolean` | ひらがな・カタカナの違いを無視する（ひらがなにそろえる）                                                                |
+| `ignoreDakuon?`        | `boolean` | 濁音（`ば`）・半濁音（`ぱ`）と清音（`は`）の違いを無視する。単独の濁点・半濁点（`゛`、`ﾞ`、結合用の濁点など）は除去する |
+| `ignoreSokuon?`        | `boolean` | 促音（`っ`）と清音（`つ`）の違いを無視する                                                                              |
+| `ignoreYouon?`         | `boolean` | 拗音（`ゃ`）と清音（`や`）の違いを無視する                                                                              |
+| `ignoreChouon?`        | `boolean` | 長音符（`ー`）を無視する                                                                                                |
+| `ignoreLineBreak?`     | `boolean` | 改行（CR、LF、Unicode の行区切り・段落区切り）を無視する                                                                |
+| `ignoreSpace?`         | `boolean` | 改行以外の空白文字（半角・全角スペース、タブ、ノーブレークスペースなど）を無視する                                      |
+| `nullValue?`           | `string`  | `value` が `null` の場合に返す値                                                                                        |
+| `undefinedValue?`      | `string`  | `value` が `undefined` の場合に返す値                                                                                   |
 
 ### `removeChouon`
 

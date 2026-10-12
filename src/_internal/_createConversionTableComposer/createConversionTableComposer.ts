@@ -3,7 +3,10 @@ import type { ConversionTable } from './types';
 export default function createConversionTableComposer() {
   const cache = new Map<string, Map<string, string>>();
 
-  const composer = (tables: ConversionTable[]): Map<string, string> => {
+  // false などの値は読み飛ばす（条件付きで変換表を並べられるようにする）
+  const composer = (
+    tables: (ConversionTable | false | null | undefined)[],
+  ): Map<string, string> => {
     const ids: string[] = [];
     const maps: [string, string][][] = [];
     for (const table of tables) {

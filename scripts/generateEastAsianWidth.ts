@@ -61,11 +61,12 @@ async function main() {
     if (!match) {
       continue;
     }
-    const category = CATEGORIES[match[3]];
+    // 1番目と3番目のグループは必須なので、マッチした場合は必ずある
+    const category = CATEGORIES[match[3]!];
     if (!category) {
       continue;
     }
-    const start = parseInt(match[1], 16);
+    const start = parseInt(match[1]!, 16);
     const end = match[2] ? parseInt(match[2], 16) : start;
     ranges.push([start, end, category]);
   }

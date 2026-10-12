@@ -16,11 +16,11 @@ describe('toNfc', () => {
   });
 
   it('null', () => {
-    expect(toNfc(null)).toBeNull();
+    expect(toNfc(null as any)).toBeNull();
   });
 
   it('undefined', () => {
-    expect(toNfc(undefined)).toBeUndefined();
+    expect(toNfc(undefined as any)).toBeUndefined();
   });
 
   describe('dataLast', () => {

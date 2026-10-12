@@ -38,7 +38,8 @@ export type NormalizeStringOptions = {
   ignoreKana?: boolean;
 
   /**
-   * 濁音(ば)・半濁音(ぱ)と清音(は)の違いを無視する
+   * 濁音(ば)・半濁音(ぱ)と清音(は)の違いを無視する\
+   * 単独の濁点・半濁点（゛、ﾞ、結合用の濁点など）は除去する
    */
   ignoreDakuon?: boolean;
 

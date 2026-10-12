@@ -59,10 +59,10 @@ const fn = normalizeString.dataLast({ ignoreKana: true });
 ### `convertByTable`
 
 ```ts
-convertByTable(str: string, tables: ConversionTable | ConversionTable[]): string
+convertByTable(str: string, tables: ConversionTable | (ConversionTable | false | null | undefined)[]): string
 ```
 
-Converts text according to conversion tables. Several tables are merged into one before conversion. Merged tables and converters are cached by `id`, so always use the same `entries` for the same `id`.
+Converts text according to conversion tables. Several tables are merged into one before conversion. `false`, `null` and `undefined` in the array are ignored, so tables can be listed conditionally, as in `[useKana && TO_HIRAGANA]`. Merged tables and converters are cached by `id`, so always use the same `entries` for the same `id`.
 
 ```ts
 convertByTable('abc', {
@@ -174,21 +174,21 @@ normalizeString('ガッコウ', {
 normalizeString('㈱ｶﾞ', { ignoreCompatibility: true }); // '(株)ガ'
 ```
 
-| Option                 | Type      | Description                                                                                                                        |
-| ---------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `ignoreCompatibility?` | `boolean` | Ignores differences between compatibility characters (NFKC normalization). Makes `ignoreComposition` and `ignoreWidth` unnecessary |
-| `ignoreComposition?`   | `boolean` | Ignores differences between composed and decomposed characters (NFC normalization)                                                 |
-| `ignoreWidth?`         | `boolean` | Ignores full-width and half-width differences (converts to half-width)                                                             |
-| `ignoreCase?`          | `boolean` | Ignores upper and lower case (converts to lowercase)                                                                               |
-| `ignoreKana?`          | `boolean` | Ignores hiragana and katakana differences (converts to hiragana)                                                                   |
-| `ignoreDakuon?`        | `boolean` | Ignores voiced (`ば`) and semi-voiced (`ぱ`) marks versus the plain form (`は`)                                                    |
-| `ignoreSokuon?`        | `boolean` | Ignores the small `っ` versus the plain `つ`                                                                                       |
-| `ignoreYouon?`         | `boolean` | Ignores small kana (`ゃ`) versus the plain form (`や`)                                                                             |
-| `ignoreChouon?`        | `boolean` | Ignores the prolonged sound mark (`ー`)                                                                                            |
-| `ignoreLineBreak?`     | `boolean` | Ignores line breaks (CR, LF, and the Unicode line and paragraph separators)                                                        |
-| `ignoreSpace?`         | `boolean` | Ignores whitespace other than line breaks (half-width and full-width spaces, tabs, no-break spaces, ...)                           |
-| `nullValue?`           | `string`  | The value returned when `value` is `null`                                                                                          |
-| `undefinedValue?`      | `string`  | The value returned when `value` is `undefined`                                                                                     |
+| Option                 | Type      | Description                                                                                                                                                            |
+| ---------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ignoreCompatibility?` | `boolean` | Ignores differences between compatibility characters (NFKC normalization). Makes `ignoreComposition` and `ignoreWidth` unnecessary                                     |
+| `ignoreComposition?`   | `boolean` | Ignores differences between composed and decomposed characters (NFC normalization)                                                                                     |
+| `ignoreWidth?`         | `boolean` | Ignores full-width and half-width differences (converts to half-width; with `ignoreKana`, kana are converted to full-width and then to hiragana)                       |
+| `ignoreCase?`          | `boolean` | Ignores upper and lower case (converts to lowercase)                                                                                                                   |
+| `ignoreKana?`          | `boolean` | Ignores hiragana and katakana differences (converts to hiragana)                                                                                                       |
+| `ignoreDakuon?`        | `boolean` | Ignores voiced (`ば`) and semi-voiced (`ぱ`) marks versus the plain form (`は`). Standalone voiced and semi-voiced marks (`゛`, `ﾞ`, combining marks, ...) are removed |
+| `ignoreSokuon?`        | `boolean` | Ignores the small `っ` versus the plain `つ`                                                                                                                           |
+| `ignoreYouon?`         | `boolean` | Ignores small kana (`ゃ`) versus the plain form (`や`)                                                                                                                 |
+| `ignoreChouon?`        | `boolean` | Ignores the prolonged sound mark (`ー`)                                                                                                                                |
+| `ignoreLineBreak?`     | `boolean` | Ignores line breaks (CR, LF, and the Unicode line and paragraph separators)                                                                                            |
+| `ignoreSpace?`         | `boolean` | Ignores whitespace other than line breaks (half-width and full-width spaces, tabs, no-break spaces, ...)                                                               |
+| `nullValue?`           | `string`  | The value returned when `value` is `null`                                                                                                                              |
+| `undefinedValue?`      | `string`  | The value returned when `value` is `undefined`                                                                                                                         |
 
 ### `removeChouon`
 

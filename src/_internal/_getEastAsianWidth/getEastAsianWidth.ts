@@ -12,7 +12,7 @@ export default function getEastAsianWidth(codePoint: number): EastAsianWidth {
   let high = EAST_ASIAN_WIDTH_RANGES.length - 1;
   while (low <= high) {
     const middle = (low + high) >>> 1;
-    const [start, end, width] = EAST_ASIAN_WIDTH_RANGES[middle];
+    const [start, end, width] = EAST_ASIAN_WIDTH_RANGES[middle]!;
     if (codePoint < start) {
       high = middle - 1;
     } else if (codePoint > end) {

@@ -17,11 +17,11 @@ describe('toNfd', () => {
   });
 
   it('null', () => {
-    expect(toNfd(null)).toBeNull();
+    expect(toNfd(null as any)).toBeNull();
   });
 
   it('undefined', () => {
-    expect(toNfd(undefined)).toBeUndefined();
+    expect(toNfd(undefined as any)).toBeUndefined();
   });
 
   describe('dataLast', () => {

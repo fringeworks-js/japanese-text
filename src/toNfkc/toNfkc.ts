@@ -15,11 +15,7 @@ import { isBlank } from '@fringeworks/utils/type/isBlank';
  * @param str
  * @returns
  */
-const toNfkc = (data: string) => _toNfkc(data);
-toNfkc.dataLast = () => (data: string) => _toNfkc(data);
-export default toNfkc;
-
-function _toNfkc(data: string): string {
+export default function toNfkc(data: string): string {
   if (isBlank(data)) {
     return data;
   }

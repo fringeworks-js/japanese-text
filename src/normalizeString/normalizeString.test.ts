@@ -284,12 +284,4 @@ describe('normalizeString', () => {
       }
     });
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(normalizeString.dataLast({ ignoreCase: true })('Hello')).toBe(
-        'hello',
-      );
-    });
-  });
 });

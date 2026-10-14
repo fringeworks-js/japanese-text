@@ -1,4 +1,4 @@
-import { clearArray } from '@fringeworks/utils/array/clearArray';
+import { clearArrayMutable } from '@fringeworks/utils/array/clearArrayMutable';
 import { isBlank } from '@fringeworks/utils/type/isBlank';
 import type { ConversionTable } from '../convertByTable';
 import { convertByTable } from '../convertByTable';
@@ -15,18 +15,7 @@ import type { TransformStringOptions } from './types';
  * @param types
  * @returns
  */
-const transformString = (
-  str: string,
-  types: TransformationType[],
-  options: TransformStringOptions = {},
-): string => _transformString(str, types, options);
-transformString.dataLast =
-  (types: TransformationType[], options: TransformStringOptions = {}) =>
-  (str: string): string =>
-    _transformString(str, types, options);
-export default transformString;
-
-function _transformString(
+export default function transformString(
   str: string,
   types: TransformationType[],
   options: TransformStringOptions = {},
@@ -43,7 +32,7 @@ function _transformString(
     if (fn) {
       if (composeTables && tables.length) {
         // composeTables=trueの場合はため込んだtablesの処理を先に行う
-        result = convertByTable(result, clearArray(tables));
+        result = convertByTable(result, clearArrayMutable(tables));
       }
       // 変換関数で変換
       return fn(result);

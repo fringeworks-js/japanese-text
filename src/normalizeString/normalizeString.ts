@@ -1,4 +1,4 @@
-import { clearArray } from '@fringeworks/utils/array/clearArray';
+import { clearArrayMutable } from '@fringeworks/utils/array/clearArrayMutable';
 import { transformString } from '../transformString';
 import { TransformationType } from '../transformString/constants';
 import type { NormalizeStringOptions } from './types';
@@ -14,17 +14,7 @@ const REGEX_DAKUTEN = /[\u3099-\u309c\uff9e\uff9f]/g;
  * @param options オプション
  * @returns 整えられた文字列
  */
-const normalizeString = (
-  value: string,
-  options: NormalizeStringOptions = {},
-): string => _normalizeString(value, options);
-normalizeString.dataLast =
-  (options: NormalizeStringOptions = {}) =>
-  (value: string): string =>
-    _normalizeString(value, options);
-export default normalizeString;
-
-function _normalizeString(
+export default function normalizeString(
   value: string,
   options: NormalizeStringOptions = {},
 ): string {
@@ -115,7 +105,7 @@ function _normalizeString(
         REGEX_DAKUTEN,
         '',
       );
-      clearArray(transformationTypes);
+      clearArrayMutable(transformationTypes);
     }
 
     if (ignoreSokuon) {

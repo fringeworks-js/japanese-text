@@ -11,11 +11,7 @@ import { isBlank } from '@fringeworks/utils/type/isBlank';
  * @param data
  * @returns
  */
-const toNfd = (data: string) => _toNfd(data);
-toNfd.dataLast = () => (data: string) => _toNfd(data);
-export default toNfd;
-
-function _toNfd(data: string): string {
+export default function toNfd(data: string): string {
   if (isBlank(data)) {
     return data;
   }

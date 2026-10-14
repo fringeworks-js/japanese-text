@@ -11,11 +11,7 @@ import { isBlank } from '@fringeworks/utils/type/isBlank';
  * @param data
  * @returns
  */
-const toNfc = (data: string) => _toNfc(data);
-toNfc.dataLast = () => (data: string) => _toNfc(data);
-export default toNfc;
-
-function _toNfc(data: string): string {
+export default function toNfc(data: string): string {
   if (isBlank(data)) {
     return data;
   }

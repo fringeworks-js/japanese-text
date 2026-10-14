@@ -14,15 +14,10 @@ import type { ToFullWidthOptions } from './types';
  * @param str
  * @returns
  */
-const toFullWidth = (str: string, options: ToFullWidthOptions = {}): string =>
-  _toFullWidth(str, options);
-toFullWidth.dataLast =
-  (options: ToFullWidthOptions = {}) =>
-  (str: string): string =>
-    _toFullWidth(str, options);
-export default toFullWidth;
-
-function _toFullWidth(str: string, options: ToFullWidthOptions = {}): string {
+export default function toFullWidth(
+  str: string,
+  options: ToFullWidthOptions = {},
+): string {
   const {
     keepAlphabet = false,
     keepNumber = false,

@@ -75,10 +75,4 @@ describe('toNfkc', () => {
       expect(toNfkc('ＡＢＣ１２３ｶﾅあいう漢字')).toBe('ABC123カナあいう漢字');
     });
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(toNfkc.dataLast()('ａｂｃ')).toBe('abc');
-    });
-  });
 });

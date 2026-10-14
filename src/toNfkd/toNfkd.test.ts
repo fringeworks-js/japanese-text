@@ -112,10 +112,4 @@ describe('toNfkd', () => {
       expect(result.endsWith('あいう漢字')).toBe(true);
     });
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(toNfkd.dataLast()('ＡＢＣ')).toBe('ABC');
-    });
-  });
 });

@@ -23,10 +23,4 @@ describe('toNfd', () => {
   it('undefined', () => {
     expect(toNfd(undefined as any)).toBeUndefined();
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(toNfd.dataLast()('abc')).toBe('abc');
-    });
-  });
 });

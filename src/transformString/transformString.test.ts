@@ -61,14 +61,4 @@ describe('transformString', () => {
       expect(result).toBe('あいう');
     });
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(
-        transformString.dataLast([TransformationType.toLowerCase])(
-          'Hello World',
-        ),
-      ).toBe('hello world');
-    });
-  });
 });

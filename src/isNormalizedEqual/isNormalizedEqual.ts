@@ -8,18 +8,7 @@ import type { IsNormalizedEqualOptions } from './types';
  * @param options オプション
  * @returns
  */
-const isNormalizedEqual = (
-  value1: string,
-  value2: string,
-  options: IsNormalizedEqualOptions = {},
-): boolean => _isNormalizedEqual(value1, value2, options);
-isNormalizedEqual.dataLast =
-  (value2: string, options: IsNormalizedEqualOptions = {}) =>
-  (value1: string): boolean =>
-    _isNormalizedEqual(value1, value2, options);
-export default isNormalizedEqual;
-
-function _isNormalizedEqual(
+export default function isNormalizedEqual(
   value1: string,
   value2: string,
   options: IsNormalizedEqualOptions = {},

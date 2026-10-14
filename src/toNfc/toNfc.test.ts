@@ -22,10 +22,4 @@ describe('toNfc', () => {
   it('undefined', () => {
     expect(toNfc(undefined as any)).toBeUndefined();
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(toNfc.dataLast()('あいう')).toBe('あいう');
-    });
-  });
 });

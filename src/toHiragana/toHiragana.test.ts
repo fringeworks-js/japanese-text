@@ -20,13 +20,6 @@ describe('toHiragana', () => {
   it('混合文字列', () => {
     expect(toHiragana('アイウabcえお')).toBe('あいうabcえお');
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(toHiragana.dataLast()('アイウ')).toBe('あいう');
-    });
-  });
-
   it('全てのカタカナを対応するひらがなに変換する', () => {
     expect(toHiragana('バビブベボパピプペポ')).toBe('ばびぶべぼぱぴぷぺぽ');
     expect(toHiragana('ナニヌネノ')).toBe('なにぬねの');

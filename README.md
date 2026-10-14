@@ -21,14 +21,6 @@ import { normalizeString } from '@fringeworks/japanese-text';
 import normalizeString from '@fringeworks/japanese-text/normalizeString';
 ```
 
-### Data Last
-
-Functions with `dataLast` take every argument except the data first and return a function that receives the data. This is useful in pipelines and as a callback for methods such as `Array.prototype.map`. Functions that have `dataLast` show it alongside their signatures.
-
-```ts
-const fn = normalizeString.dataLast({ ignoreKana: true });
-```
-
 ---
 
 ## API
@@ -124,7 +116,6 @@ isHalfWidth('café', { ambiguousAs: 'half' }); // true
 
 ```ts
 isNormalizedEqual(value1: string, value2: string, options?: IsNormalizedEqualOptions): boolean
-isNormalizedEqual.dataLast(value2: string, options?: IsNormalizedEqualOptions): (value1: string) => boolean
 ```
 
 Normalizes two strings with `normalizeString` and checks whether they are equal. How to normalize is set with the options of `normalizeString` (nothing is normalized if none are given).
@@ -159,7 +150,6 @@ Checks whether a string consists only of Shift_JIS single-byte characters (print
 
 ```ts
 normalizeString(value: string, options?: NormalizeStringOptions): string
-normalizeString.dataLast(options?: NormalizeStringOptions): (value: string) => string
 ```
 
 Removes variations in notation, such as full-width and half-width forms or upper and lower case, so that strings can be searched and compared. The options choose which differences to remove (nothing is converted if none are given). When `value` is `null` or `undefined`, returns `nullValue` or `undefinedValue` if given, and `value` as is otherwise.
@@ -226,7 +216,6 @@ Removes whitespace other than line breaks (half-width and full-width spaces, tab
 
 ```ts
 toFullWidth(str: string, options?: ToFullWidthOptions): string
-toFullWidth.dataLast(options?: ToFullWidthOptions): (str: string) => string
 ```
 
 Converts half-width letters, digits, symbols, spaces, and katakana to full-width.
@@ -256,7 +245,6 @@ Converts full-width letters, digits, symbols, spaces, and katakana to half-width
 
 ```ts
 toHiragana(str: string): string
-toHiragana.dataLast(): (str: string) => string
 toKatakana(str: string): string
 ```
 
@@ -289,7 +277,6 @@ toNfc(data: string): string
 toNfd(data: string): string
 toNfkc(data: string): string
 toNfkd(data: string): string
-// each also has dataLast(): (data: string) => string
 ```
 
 Applies Unicode normalization with `String.prototype.normalize`.
@@ -305,7 +292,6 @@ Applies Unicode normalization with `String.prototype.normalize`.
 
 ```ts
 transformString(str: string, types: TransformationType[], options?: TransformStringOptions): string
-transformString.dataLast(types: TransformationType[], options?: TransformStringOptions): (str: string) => string
 ```
 
 Applies the conversions in `types` in the given order.

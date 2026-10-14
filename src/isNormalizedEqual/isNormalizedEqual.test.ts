@@ -35,10 +35,4 @@ describe('isNormalizedEqual', () => {
       }),
     ).toBe(false);
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(isNormalizedEqual.dataLast('hello')('hello')).toBe(true);
-    });
-  });
 });

@@ -21,14 +21,6 @@ import { normalizeString } from '@fringeworks/japanese-text';
 import normalizeString from '@fringeworks/japanese-text/normalizeString';
 ```
 
-### Data Last
-
-`dataLast` を持つ関数は、データ以外の引数を先に受け取り、データを受け取る関数を返します。パイプライン処理や、`Array.prototype.map` などのコールバックに渡す場合に使えます。`dataLast` を持つ関数は、シグネチャに `dataLast` を併記しています。
-
-```ts
-const fn = normalizeString.dataLast({ ignoreKana: true });
-```
-
 ---
 
 ## API
@@ -124,7 +116,6 @@ isHalfWidth('café', { ambiguousAs: 'half' }); // true
 
 ```ts
 isNormalizedEqual(value1: string, value2: string, options?: IsNormalizedEqualOptions): boolean
-isNormalizedEqual.dataLast(value2: string, options?: IsNormalizedEqualOptions): (value1: string) => boolean
 ```
 
 2つの文字列を `normalizeString` で正規化してから、等しいか判定します。正規化の方法は `normalizeString` のオプションで指定します（何も指定しない場合は正規化しません）。
@@ -159,7 +150,6 @@ isShiftJisSingleByte(str: string): boolean
 
 ```ts
 normalizeString(value: string, options?: NormalizeStringOptions): string
-normalizeString.dataLast(options?: NormalizeStringOptions): (value: string) => string
 ```
 
 全角・半角や大文字・小文字などの表記の揺れを無くし、検索や比較に使える形にします。どの違いを無くすかはオプションで指定します（何も指定しない場合は変換しません）。`value` が `null` / `undefined` の場合は、`nullValue` / `undefinedValue` を指定していればその値を、そうでなければ `value` をそのまま返します。
@@ -226,7 +216,6 @@ removeWhitespace(str: string): string
 
 ```ts
 toFullWidth(str: string, options?: ToFullWidthOptions): string
-toFullWidth.dataLast(options?: ToFullWidthOptions): (str: string) => string
 ```
 
 半角の英字・数字・記号・スペース・カタカナを全角にします。
@@ -256,7 +245,6 @@ toHalfWidth(str: string, options?: ToHalfWidthOptions): string
 
 ```ts
 toHiragana(str: string): string
-toHiragana.dataLast(): (str: string) => string
 toKatakana(str: string): string
 ```
 
@@ -289,7 +277,6 @@ toNfc(data: string): string
 toNfd(data: string): string
 toNfkc(data: string): string
 toNfkd(data: string): string
-// いずれも dataLast(): (data: string) => string を持つ
 ```
 
 `String.prototype.normalize` で Unicode 正規化を行います。
@@ -305,7 +292,6 @@ toNfkd(data: string): string
 
 ```ts
 transformString(str: string, types: TransformationType[], options?: TransformStringOptions): string
-transformString.dataLast(types: TransformationType[], options?: TransformStringOptions): (str: string) => string
 ```
 
 `types` に指定した変換を、指定した順番に適用します。

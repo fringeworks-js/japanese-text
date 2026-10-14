@@ -36,10 +36,4 @@ describe('toFullWidth', () => {
       expect(toFullWidth('abc123', { keepNumber: true })).toBe('ａｂｃ123');
     });
   });
-
-  describe('dataLast', () => {
-    it('基本動作', () => {
-      expect(toFullWidth.dataLast()('abc')).toBe('ａｂｃ');
-    });
-  });
 });

@@ -1,5 +1,5 @@
 import { ensureArray } from '@fringeworks/utils/array/ensureArray';
-import { replaceByMap } from '@fringeworks/utils/string/replaceByMap';
+import { createReplacerByMap } from '@fringeworks/utils/string/createReplacerByMap';
 import { isBlank } from '@fringeworks/utils/type/isBlank';
 import _createConversionTableComposer from '../_internal/_createConversionTableComposer';
 import type { ConversionTable } from './types';
@@ -23,7 +23,7 @@ export default function convertByTable(
   const map = _composeConversionTables(ensureArray(tables));
   let replacer = replacers.get(map);
   if (!replacer) {
-    replacer = replaceByMap.dataLast(map);
+    replacer = createReplacerByMap(map);
     replacers.set(map, replacer);
   }
   return replacer(str);

@@ -1,11 +1,15 @@
-import { recaseCamel } from '@fringeworks/utils/string/recaseCamel';
-import { recaseKebab } from '@fringeworks/utils/string/recaseKebab';
-import { recaseLower } from '@fringeworks/utils/string/recaseLower';
-import { recasePascal } from '@fringeworks/utils/string/recasePascal';
-import { recaseScreamingSnake } from '@fringeworks/utils/string/recaseScreamingSnake';
-import { recaseSnake } from '@fringeworks/utils/string/recaseSnake';
-import { recaseTitle } from '@fringeworks/utils/string/recaseTitle';
-import { recaseUpper } from '@fringeworks/utils/string/recaseUpper';
+import { toCamelCase } from '@fringeworks/utils/string/toCamelCase';
+import { toDotCase } from '@fringeworks/utils/string/toDotCase';
+import { toFlatCase } from '@fringeworks/utils/string/toFlatCase';
+import { toKebabCase } from '@fringeworks/utils/string/toKebabCase';
+import { toLowerCase } from '@fringeworks/utils/string/toLowerCase';
+import { toPascalCase } from '@fringeworks/utils/string/toPascalCase';
+import { toScreamingSnakeCase } from '@fringeworks/utils/string/toScreamingSnakeCase';
+import { toSentenceCase } from '@fringeworks/utils/string/toSentenceCase';
+import { toSnakeCase } from '@fringeworks/utils/string/toSnakeCase';
+import { toTitleCase } from '@fringeworks/utils/string/toTitleCase';
+import { toTrainCase } from '@fringeworks/utils/string/toTrainCase';
+import { toUpperCase } from '@fringeworks/utils/string/toUpperCase';
 import type { ConversionTable } from '../convertByTable';
 import { REMOVE_CHOUON } from '../removeChouon/constants';
 import { REMOVE_LINE_BREAKS } from '../removeLineBreaks/constants';
@@ -87,14 +91,18 @@ export const TRANSFORMATION_TABLES: Partial<
 export const TRANSFORMATION_FUNCTIONS: Partial<
   Record<TransformationType, (str: string) => string>
 > = {
-  toCamelCase: recaseCamel,
-  toKebabCase: recaseKebab,
-  toLowerCase: recaseLower,
-  toPascalCase: recasePascal,
-  toScreamingSnakeCase: recaseScreamingSnake,
-  toSnakeCase: recaseSnake,
-  toTitleCase: recaseTitle,
-  toUpperCase: recaseUpper,
+  toCamelCase: toCamelCase,
+  toDotCase: toDotCase,
+  toFlatCase: toFlatCase,
+  toKebabCase: toKebabCase,
+  toLowerCase: toLowerCase,
+  toPascalCase: toPascalCase,
+  toScreamingSnakeCase: toScreamingSnakeCase,
+  toSentenceCase: toSentenceCase,
+  toSnakeCase: toSnakeCase,
+  toTitleCase: toTitleCase,
+  toTrainCase: toTrainCase,
+  toUpperCase: toUpperCase,
   toNfc: toNfc,
   toNfd: toNfd,
   toNfkc: toNfkc,

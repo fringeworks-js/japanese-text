@@ -317,14 +317,14 @@ transformString('hello world', [TransformationType.toPascalCase]); // 'HelloWorl
 
 変換の種類（`TransformationType` の値）は次のとおりです。
 
-| 種類               | 値                                                                                                                                                           |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 全角・半角         | `toFullWidth`、`toFullWidthAlphabet`、`toFullWidthNumber`、`toFullWidthSign`、`toFullWidthSpace`、`toFullWidthKana`、`toHalfWidth` と、同様の `toHalfWidth*` |
-| ひらがな・カタカナ | `toHiragana`、`toKatakana`                                                                                                                                   |
-| 清音               | `toHiraganaSeion`、`toHiraganaSeionFromDakuon`、`toHiraganaSeionFromSokuon`、`toHiraganaSeionFromYouon` と、同様の `toKatakanaSeion*`                        |
-| 削除               | `removeChouon`、`removeLineBreaks`、`removeSpaces`、`removeWhitespace`                                                                                       |
-| ケース             | `toCamelCase`、`toKebabCase`、`toLowerCase`、`toPascalCase`、`toScreamingSnakeCase`、`toSnakeCase`、`toTitleCase`、`toUpperCase`                             |
-| Unicode 正規化     | `toNfc`、`toNfd`、`toNfkc`、`toNfkd`                                                                                                                         |
+| 種類               | 値                                                                                                                                                                                           |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 全角・半角         | `toFullWidth`、`toFullWidthAlphabet`、`toFullWidthNumber`、`toFullWidthSign`、`toFullWidthSpace`、`toFullWidthKana`、`toHalfWidth` と、同様の `toHalfWidth*`                                 |
+| ひらがな・カタカナ | `toHiragana`、`toKatakana`                                                                                                                                                                   |
+| 清音               | `toHiraganaSeion`、`toHiraganaSeionFromDakuon`、`toHiraganaSeionFromSokuon`、`toHiraganaSeionFromYouon` と、同様の `toKatakanaSeion*`                                                        |
+| 削除               | `removeChouon`、`removeLineBreaks`、`removeSpaces`、`removeWhitespace`                                                                                                                       |
+| ケース             | `toCamelCase`、`toDotCase`、`toFlatCase`、`toKebabCase`、`toLowerCase`、`toPascalCase`、`toScreamingSnakeCase`、`toSentenceCase`、`toSnakeCase`、`toTitleCase`、`toTrainCase`、`toUpperCase` |
+| Unicode 正規化     | `toNfc`、`toNfd`、`toNfkc`、`toNfkd`                                                                                                                                                         |
 
 | オプション       | 型        | 説明                                                                                                                                                 |
 | ---------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |

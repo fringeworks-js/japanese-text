@@ -317,14 +317,14 @@ transformString('hello world', [TransformationType.toPascalCase]); // 'HelloWorl
 
 The available conversions (values of `TransformationType`) are:
 
-| Kind                    | Values                                                                                                                                                              |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Full-width / half-width | `toFullWidth`, `toFullWidthAlphabet`, `toFullWidthNumber`, `toFullWidthSign`, `toFullWidthSpace`, `toFullWidthKana`, `toHalfWidth`, and the matching `toHalfWidth*` |
-| Hiragana / katakana     | `toHiragana`, `toKatakana`                                                                                                                                          |
-| Plain forms             | `toHiraganaSeion`, `toHiraganaSeionFromDakuon`, `toHiraganaSeionFromSokuon`, `toHiraganaSeionFromYouon`, and the matching `toKatakanaSeion*`                        |
-| Removal                 | `removeChouon`, `removeLineBreaks`, `removeSpaces`, `removeWhitespace`                                                                                              |
-| Case                    | `toCamelCase`, `toKebabCase`, `toLowerCase`, `toPascalCase`, `toScreamingSnakeCase`, `toSnakeCase`, `toTitleCase`, `toUpperCase`                                    |
-| Unicode normalization   | `toNfc`, `toNfd`, `toNfkc`, `toNfkd`                                                                                                                                |
+| Kind                    | Values                                                                                                                                                                                       |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Full-width / half-width | `toFullWidth`, `toFullWidthAlphabet`, `toFullWidthNumber`, `toFullWidthSign`, `toFullWidthSpace`, `toFullWidthKana`, `toHalfWidth`, and the matching `toHalfWidth*`                          |
+| Hiragana / katakana     | `toHiragana`, `toKatakana`                                                                                                                                                                   |
+| Plain forms             | `toHiraganaSeion`, `toHiraganaSeionFromDakuon`, `toHiraganaSeionFromSokuon`, `toHiraganaSeionFromYouon`, and the matching `toKatakanaSeion*`                                                 |
+| Removal                 | `removeChouon`, `removeLineBreaks`, `removeSpaces`, `removeWhitespace`                                                                                                                       |
+| Case                    | `toCamelCase`, `toDotCase`, `toFlatCase`, `toKebabCase`, `toLowerCase`, `toPascalCase`, `toScreamingSnakeCase`, `toSentenceCase`, `toSnakeCase`, `toTitleCase`, `toTrainCase`, `toUpperCase` |
+| Unicode normalization   | `toNfc`, `toNfd`, `toNfkc`, `toNfkd`                                                                                                                                                         |
 
 | Option           | Type      | Description                                                                                                                                           |
 | ---------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |

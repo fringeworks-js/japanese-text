@@ -12,6 +12,21 @@ describe('transformString', () => {
     ).toBe('hello world');
   });
 
+  it('関数変換: ケース', () => {
+    expect(transformString('helloWorld', [TransformationType.toDotCase])).toBe(
+      'hello.world',
+    );
+    expect(transformString('helloWorld', [TransformationType.toFlatCase])).toBe(
+      'helloworld',
+    );
+    expect(
+      transformString('helloWorld', [TransformationType.toSentenceCase]),
+    ).toBe('Hello world');
+    expect(
+      transformString('helloWorld', [TransformationType.toTrainCase]),
+    ).toBe('Hello-World');
+  });
+
   it('テーブル変換: toHiragana', () => {
     expect(transformString('アイウ', [TransformationType.toHiragana])).toBe(
       'あいう',

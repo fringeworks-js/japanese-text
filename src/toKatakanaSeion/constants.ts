@@ -3,8 +3,7 @@ import type { ConversionTable } from '../_internal/_createConversionTableCompose
 /**
  * カタカナの濁音 -> 清音を変換する為のマップ
  */
-export const TO_KATAKANA_SEION_FROM_DAKUON = {
-  id: 'toKatakanaSeionFromDakuon',
+export const TO_KATAKANA_SEION_FROM_DAKUON: ConversionTable = {
   entries: [
     ['ヴ', 'ウ'],
     ['ガ', 'カ'],
@@ -34,21 +33,19 @@ export const TO_KATAKANA_SEION_FROM_DAKUON = {
     ['ポ', 'ホ'],
     ['ヾ', 'ヽ'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * カタカナの促音 -> 清音を変換する為のマップ
  */
-export const TO_KATAKANA_SEION_FROM_SOKUON = {
-  id: 'toKatakanaSeionFromSokuon',
+export const TO_KATAKANA_SEION_FROM_SOKUON: ConversionTable = {
   entries: [['ッ', 'ツ']],
-} as const satisfies ConversionTable;
+};
 
 /**
  * カタカナの拗音 -> 清音を変換する為のマップ
  */
-export const TO_KATAKANA_SEION_FROM_YOUON = {
-  id: 'toKatakanaSeionFromYouon',
+export const TO_KATAKANA_SEION_FROM_YOUON: ConversionTable = {
   entries: [
     ['ァ', 'ア'],
     ['ィ', 'イ'],
@@ -60,16 +57,15 @@ export const TO_KATAKANA_SEION_FROM_YOUON = {
     ['ョ', 'ヨ'],
     ['ヮ', 'ワ'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * カタカナの濁音・促音・拗音 -> 清音を変換する為のマップ
  */
-export const TO_KATAKANA_SEION = {
-  id: 'toKatakanaSeion',
+export const TO_KATAKANA_SEION: ConversionTable = {
   entries: [
     ...TO_KATAKANA_SEION_FROM_DAKUON.entries,
     ...TO_KATAKANA_SEION_FROM_SOKUON.entries,
     ...TO_KATAKANA_SEION_FROM_YOUON.entries,
   ],
-} as const satisfies ConversionTable;
+};

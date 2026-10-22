@@ -33,4 +33,12 @@ describe('toHalfWidth', () => {
   it('keepKana: trueでカタカナの変換を無効化する', () => {
     expect(toHalfWidth('アａ', { keepKana: true })).toBe('アa');
   });
+
+  it('keepKana: trueで句読点・かぎ括弧・中黒の変換も無効化する', () => {
+    expect(toHalfWidth('。「」、・！', { keepKana: true })).toBe('。「」、・!');
+  });
+
+  it('keepSymbol: trueで記号の変換を無効化する', () => {
+    expect(toHalfWidth('！。', { keepSymbol: true })).toBe('！｡');
+  });
 });

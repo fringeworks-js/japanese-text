@@ -3,8 +3,7 @@ import type { ConversionTable } from '../_internal/_createConversionTableCompose
 /**
  * ひらがなの濁音 -> 清音を変換する為のマップ
  */
-export const TO_HIRAGANA_SEION_FROM_DAKUON = {
-  id: 'toHiraganaSeionFromDakuon',
+export const TO_HIRAGANA_SEION_FROM_DAKUON: ConversionTable = {
   entries: [
     ['ゔ', 'う'],
     ['が', 'か'],
@@ -32,22 +31,21 @@ export const TO_HIRAGANA_SEION_FROM_DAKUON = {
     ['ぺ', 'へ'],
     ['ぼ', 'ほ'],
     ['ぽ', 'ほ'],
+    ['ゞ', 'ゝ'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * ひらがなの促音 -> 清音を変換する為のマップ
  */
-export const TO_HIRAGANA_SEION_FROM_SOKUON = {
-  id: 'toHiraganaSeionFromSokuon',
+export const TO_HIRAGANA_SEION_FROM_SOKUON: ConversionTable = {
   entries: [['っ', 'つ']],
-} as const satisfies ConversionTable;
+};
 
 /**
  * ひらがなの拗音 -> 清音を変換する為のマップ
  */
-export const TO_HIRAGANA_SEION_FROM_YOUON = {
-  id: 'toHiraganaSeionFromYouon',
+export const TO_HIRAGANA_SEION_FROM_YOUON: ConversionTable = {
   entries: [
     ['ぁ', 'あ'],
     ['ぃ', 'い'],
@@ -59,16 +57,15 @@ export const TO_HIRAGANA_SEION_FROM_YOUON = {
     ['ょ', 'よ'],
     ['ゎ', 'わ'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * ひらがなの濁音・促音・拗音 -> 清音を変換する為のマップ
  */
-export const TO_HIRAGANA_SEION = {
-  id: 'toHiraganaSeion',
+export const TO_HIRAGANA_SEION: ConversionTable = {
   entries: [
     ...TO_HIRAGANA_SEION_FROM_DAKUON.entries,
     ...TO_HIRAGANA_SEION_FROM_SOKUON.entries,
     ...TO_HIRAGANA_SEION_FROM_YOUON.entries,
   ],
-} as const satisfies ConversionTable;
+};

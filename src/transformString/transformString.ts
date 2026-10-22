@@ -1,5 +1,4 @@
 import { clearArrayMutable } from '@fringeworks/utils/array/clearArrayMutable';
-import { isBlank } from '@fringeworks/utils/type/isBlank';
 import type { ConversionTable } from '../convertByTable';
 import { convertByTable } from '../convertByTable';
 import {
@@ -17,10 +16,10 @@ import type { TransformStringOptions } from './types';
  */
 export default function transformString(
   str: string,
-  types: TransformationType[],
+  types: readonly TransformationType[],
   options: TransformStringOptions = {},
 ): string {
-  if (isBlank(str)) {
+  if (!str) {
     return str;
   }
 

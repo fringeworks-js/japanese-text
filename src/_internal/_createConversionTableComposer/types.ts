@@ -1,11 +1,10 @@
-export type ConversionTable<T extends string = string> = {
-  /**
-   * ID（合成したmapのキャッシュに使う）
-   */
-  readonly id: T;
-
+/**
+ * 変換テーブル
+ * 合成したmapはテーブルのオブジェクトごとにキャッシュするため、定数として定義して使い回す
+ */
+export type ConversionTable = {
   /**
    * 変換前と変換後の文字列の組
    */
-  entries: [string, string][];
+  readonly entries: readonly (readonly [string, string])[];
 };

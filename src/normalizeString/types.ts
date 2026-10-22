@@ -3,16 +3,6 @@
  */
 export type NormalizeStringOptions = {
   /**
-   * 値がnullの場合に置き換える値
-   */
-  nullValue?: string;
-
-  /**
-   * 値がundefinedの場合に置き換える値
-   */
-  undefinedValue?: string;
-
-  /**
    * 合成&互換文字の違いを無視する
    */
   ignoreCompatibility?: boolean;
@@ -57,6 +47,36 @@ export type NormalizeStringOptions = {
    * 長音(ー)を無視する
    */
   ignoreChouon?: boolean;
+
+  /**
+   * 長音の表記の違いを無視する\
+   * かなの直後にある、長音の代わりに使われた記号（`―`、`－`、`-`、`〜` など）を長音(ー)にそろえる
+   */
+  ignoreChouonVariant?: boolean;
+
+  /**
+   * ハイフンの表記の違いを無視する\
+   * かなの直後にない、ハイフンの代わりに使われた記号（`－`、`―`、`−`、`ー` など）をハイフン(-)にそろえる
+   */
+  ignoreHyphenVariant?: boolean;
+
+  /**
+   * スペースの種類の違いを無視する\
+   * 全角スペース、ノーブレークスペースなどを半角スペースにそろえる
+   */
+  ignoreSpaceVariant?: boolean;
+
+  /**
+   * 波線の種類の違いを無視する\
+   * 波ダッシュ（〜）、半角チルダ（~）などを全角チルダ（～）にそろえる
+   */
+  ignoreTildeVariant?: boolean;
+
+  /**
+   * 中黒の種類の違いを無視する\
+   * 半角の中黒（･）、欧文の中点（·）などを中黒（・）にそろえる
+   */
+  ignoreMiddleDotVariant?: boolean;
 
   /**
    * 改行（CR、LF、Unicodeの行区切り・段落区切り）を無視する

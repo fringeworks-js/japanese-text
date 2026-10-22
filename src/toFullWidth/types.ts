@@ -15,7 +15,7 @@ export type ToFullWidthOptions = {
    * 記号は変換せずに残す
    * @default false
    */
-  keepSign?: boolean;
+  keepSymbol?: boolean;
 
   /**
    * スペースは変換せずに残す

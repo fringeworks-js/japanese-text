@@ -1,5 +1,3 @@
-import { isBlank } from '@fringeworks/utils/type/isBlank';
-
 /**
  * NFC（標準合成）\
  * 合成済み文字を優先する。\
@@ -8,12 +6,12 @@ import { isBlank } from '@fringeworks/utils/type/isBlank';
  * 例:
  * - `か` + `゛` → `が`
  *
- * @param data
+ * @param str
  * @returns
  */
-export default function toNfc(data: string): string {
-  if (isBlank(data)) {
-    return data;
+export default function toNfc(str: string): string {
+  if (!str) {
+    return str;
   }
-  return data.normalize('NFC');
+  return str.normalize('NFC');
 }

@@ -3,8 +3,7 @@ import type { ConversionTable } from '../_internal/_createConversionTableCompose
 /**
  * ひらがな → カタカナを変換する為のマップ
  */
-export const TO_KATAKANA = {
-  id: 'toKatakana',
+export const TO_KATAKANA: ConversionTable = {
   entries: [
     ['ぁ', 'ァ'],
     ['あ', 'ア'],
@@ -93,4 +92,4 @@ export const TO_KATAKANA = {
     ['ゝ', 'ヽ'],
     ['ゞ', 'ヾ'],
   ],
-} as const satisfies ConversionTable;
+};

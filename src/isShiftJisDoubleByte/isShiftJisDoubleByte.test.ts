@@ -22,9 +22,12 @@ describe('isShiftJisDoubleByte', () => {
     expect(isShiftJisDoubleByte('𠮷')).toBe(false);
     expect(isShiftJisDoubleByte('😀')).toBe(false);
     expect(isShiftJisDoubleByte('한')).toBe(false);
-    // 波ダッシュ（U+301C）・マイナス記号（U+2212）はWindows-31Jでは表せない
+    // 波ダッシュ（U+301C）はWindows-31Jでは表せない
     expect(isShiftJisDoubleByte('〜')).toBe(false);
-    expect(isShiftJisDoubleByte('−')).toBe(false);
+  });
+
+  it('マイナス記号（U+2212）は全角のハイフンマイナスとして表せるのでtrueを返す', () => {
+    expect(isShiftJisDoubleByte('−')).toBe(true);
   });
 
   it('ユーザー定義領域（外字）はfalseを返す', () => {

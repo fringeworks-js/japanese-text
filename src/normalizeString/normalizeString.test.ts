@@ -1,3 +1,5 @@
+import { isNormalizedEqual } from '../isNormalizedEqual';
+import { toHalfWidth } from '../toHalfWidth';
 import normalizeString from './normalizeString';
 
 describe('normalizeString', () => {
@@ -40,11 +42,143 @@ describe('normalizeString', () => {
         normalizeString('Ａ１－　', { ignoreWidth: true, ignoreKana: true }),
       ).toBe('A1- ');
     });
+
+    it('カナ・句読点・かぎ括弧は半角にそろえる', () => {
+      expect(normalizeString('「ガッコー」、。', { ignoreWidth: true })).toBe(
+        '｢ｶﾞｯｺｰ｣､｡',
+      );
+    });
+
+    it('ignoreKana と組み合わせると、句読点・かぎ括弧は全角にそろえる', () => {
+      expect(
+        normalizeString('｢ｱ｣､｡', { ignoreWidth: true, ignoreKana: true }),
+      ).toBe('「あ」、。');
+    });
+
+    // かなを扱うオプションは、半角・全角のどちらのカナにも同じように効く
+    it.each([
+      ['ignoreDakuon', 'ガパ', 'ｶﾊ'],
+      ['ignoreSokuon', 'ッ', 'ﾂ'],
+      ['ignoreYouon', 'ャァ', 'ﾔｱ'],
+      ['ignoreChouon', 'ラーメン', 'ﾗﾒﾝ'],
+    ])('%s と組み合わせる', (name, fullWidth, expected) => {
+      const options = { ignoreWidth: true, [name]: true };
+      const halfWidth = toHalfWidth(fullWidth);
+      expect(normalizeString(fullWidth, options)).toBe(expected);
+      expect(normalizeString(halfWidth, options)).toBe(expected);
+      expect(isNormalizedEqual(fullWidth, halfWidth, options)).toBe(true);
+    });
   });
 
   describe('ignoreChouon', () => {
     it('長音記号を除去する', () => {
       expect(normalizeString('コーヒー', { ignoreChouon: true })).toBe('コヒ');
+    });
+  });
+
+  describe('ignoreChouonVariant', () => {
+    it('かなの直後の長音の代わりの記号を長音にそろえる', () => {
+      expect(
+        normalizeString('サ―バ メ-ル すご〜い', { ignoreChouonVariant: true }),
+      ).toBe('サーバ メール すごーい');
+    });
+
+    it('かなの直後でない記号はそのまま残す', () => {
+      expect(normalizeString('1－2', { ignoreChouonVariant: true })).toBe(
+        '1－2',
+      );
+    });
+
+    it('ignoreChouon と組み合わせると、長音の代わりの記号も除去する', () => {
+      expect(
+        normalizeString('サ―バー', {
+          ignoreChouonVariant: true,
+          ignoreChouon: true,
+        }),
+      ).toBe('サバ');
+    });
+
+    it('ignoreWidth と組み合わせると、半角カタカナの直後も対象にする', () => {
+      const options = { ignoreWidth: true, ignoreChouonVariant: true };
+      expect(normalizeString('ｻ―ﾊﾞ', options)).toBe('ｻｰﾊﾞ');
+      expect(isNormalizedEqual('ｻ―ﾊﾞ', 'サーバ', options)).toBe(true);
+    });
+
+    it('ignoreSpace と組み合わせると、空白を除去して隣り合った記号も対象にする', () => {
+      expect(
+        normalizeString('サ ―', {
+          ignoreSpace: true,
+          ignoreChouonVariant: true,
+        }),
+      ).toBe('サー');
+    });
+  });
+
+  describe('ignoreHyphenVariant', () => {
+    it('かなの直後にないハイフンの代わりの記号をハイフンにそろえる', () => {
+      expect(
+        normalizeString('123ー4567 1－2―3 サーバ', {
+          ignoreHyphenVariant: true,
+        }),
+      ).toBe('123-4567 1-2-3 サーバ');
+    });
+
+    it('ignoreChouon と組み合わせても、ハイフンにした長音記号は除去しない', () => {
+      expect(
+        normalizeString('123ー4567 サーバ', {
+          ignoreHyphenVariant: true,
+          ignoreChouon: true,
+        }),
+      ).toBe('123-4567 サバ');
+    });
+
+    it('ignoreDakuon で除去した濁点の後ろも、除去後の前の文字で判断する', () => {
+      const options = { ignoreDakuon: true, ignoreHyphenVariant: true };
+      expect(normalizeString('1゛―2', options)).toBe('1-2');
+    });
+  });
+
+  describe('ignoreSpaceVariant', () => {
+    it('各種のスペースを半角スペースにそろえる', () => {
+      expect(normalizeString('a　b c', { ignoreSpaceVariant: true })).toBe(
+        'a b c',
+      );
+    });
+  });
+
+  describe('ignoreTildeVariant', () => {
+    it('波線を全角チルダにそろえる', () => {
+      expect(normalizeString('1〜3 1~3', { ignoreTildeVariant: true })).toBe(
+        '1～3 1～3',
+      );
+    });
+
+    it('ignoreWidth と組み合わせると、半角のチルダにそろう', () => {
+      expect(
+        normalizeString('1〜3 1～3', {
+          ignoreTildeVariant: true,
+          ignoreWidth: true,
+        }),
+      ).toBe('1~3 1~3');
+    });
+
+    it('ignoreChouonVariant と組み合わせると、かなの直後の波線は長音になる', () => {
+      expect(
+        normalizeString('すご〜い 1〜3', {
+          ignoreTildeVariant: true,
+          ignoreChouonVariant: true,
+        }),
+      ).toBe('すごーい 1～3');
+    });
+  });
+
+  describe('ignoreMiddleDotVariant', () => {
+    it('中黒をそろえる', () => {
+      expect(
+        normalizeString('ジョン·スミス ジョン･スミス', {
+          ignoreMiddleDotVariant: true,
+        }),
+      ).toBe('ジョン・スミス ジョン・スミス');
     });
   });
 
@@ -104,6 +238,13 @@ describe('normalizeString', () => {
         normalizeString('ばバ', { ignoreDakuon: true, ignoreKana: true }),
       ).toBe('はは');
     });
+
+    it('濁音の踊り字（ゞ・ヾ）を清音の踊り字にそろえる', () => {
+      expect(normalizeString('ゞヾ', { ignoreDakuon: true })).toBe('ゝヽ');
+      expect(
+        normalizeString('ゞヾ', { ignoreDakuon: true, ignoreKana: true }),
+      ).toBe('ゝゝ');
+    });
   });
 
   describe('ignoreSokuon', () => {
@@ -135,18 +276,6 @@ describe('normalizeString', () => {
       expect(
         normalizeString('ゃャ', { ignoreYouon: true, ignoreKana: true }),
       ).toBe('やや');
-    });
-  });
-
-  describe('nullValue / undefinedValue', () => {
-    it('nullの場合にnullValueを返す', () => {
-      expect(normalizeString(null as any, { nullValue: '' })).toBe('');
-    });
-
-    it('undefinedの場合にundefinedValueを返す', () => {
-      expect(normalizeString(undefined as any, { undefinedValue: '' })).toBe(
-        '',
-      );
     });
   });
 
@@ -255,6 +384,11 @@ describe('normalizeString', () => {
       'ignoreSokuon',
       'ignoreYouon',
       'ignoreChouon',
+      'ignoreChouonVariant',
+      'ignoreHyphenVariant',
+      'ignoreSpaceVariant',
+      'ignoreTildeVariant',
+      'ignoreMiddleDotVariant',
       'ignoreLineBreak',
       'ignoreSpace',
     ] as const;
@@ -270,6 +404,9 @@ describe('normalizeString', () => {
       'ガッコー　ＡＢＣ',
       'İß㍿ヷゝゞ',
       'ﾟİ゜İ',
+      'サ―バ－ーメ-ル~ ―すご〜い',
+      'ｻ ﾞ―1－2',
+      '123ー4567 ｻｰ〜1～2･ジョン· ',
     ];
 
     it.each(SAMPLES)('すべてのオプションの組み合わせ: %s', (sample) => {

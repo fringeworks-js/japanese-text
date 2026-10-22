@@ -43,8 +43,11 @@ function createDoubleByteCodePoints(): Set<number> {
  * コードポイントをShift_JISで表した時のバイト数を取得する
  *
  * - 1: 1バイト文字（ASCIIの表示可能な文字、半角カタカナ、`¥`、`‾`）
- * - 2: 2バイト文字（JIS X 0208の文字とWindows-31Jの拡張文字）
+ * - 2: 2バイト文字（JIS X 0208の文字とWindows-31Jの拡張文字、`−`）
  * - 0: Shift_JISで表せない文字、制御文字
+ *
+ * `¥`・`‾`・`−` は、WHATWG Encoding Standard のエンコーダーが
+ * 別の文字のバイト列で表すもので、デコードすると `\`・`~`・`－` になる
  * @param codePoint コードポイント
  * @returns バイト数
  */
@@ -59,6 +62,10 @@ export default function getShiftJisCharByteLength(
     codePoint === 0x203e
   ) {
     return 1;
+  }
+  if (codePoint === 0x2212) {
+    // マイナス記号は全角のハイフンマイナス（U+FF0D）のバイト列で表す
+    return 2;
   }
   doubleByteCodePoints ??= createDoubleByteCodePoints();
   return doubleByteCodePoints.has(codePoint) ? 2 : 0;

@@ -3,8 +3,7 @@ import type { ConversionTable } from '../_internal/_createConversionTableCompose
 /**
  * アルファベットの半角 -> 全角を変換する為のマップ
  */
-export const TO_FULL_WIDTH_ALPHABET = {
-  id: 'toFullWidthAlphabet',
+export const TO_FULL_WIDTH_ALPHABET: ConversionTable = {
   entries: [
     ['A', 'Ａ'],
     ['a', 'ａ'],
@@ -59,13 +58,12 @@ export const TO_FULL_WIDTH_ALPHABET = {
     ['Z', 'Ｚ'],
     ['z', 'ｚ'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * 数字の半角 -> 全角を変換する為のマップ
  */
-export const TO_FULL_WIDTH_NUMBER = {
-  id: 'toFullWidthNumber',
+export const TO_FULL_WIDTH_NUMBER: ConversionTable = {
   entries: [
     ['0', '０'],
     ['1', '１'],
@@ -78,13 +76,12 @@ export const TO_FULL_WIDTH_NUMBER = {
     ['8', '８'],
     ['9', '９'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * 記号の半角 -> 全角を変換する為のマップ
  */
-export const TO_FULL_WIDTH_SIGN = {
-  id: 'toFullWidthSign',
+export const TO_FULL_WIDTH_SYMBOL: ConversionTable = {
   entries: [
     ["'", '＇'],
     ['-', '－'],
@@ -98,9 +95,7 @@ export const TO_FULL_WIDTH_SIGN = {
     [')', '）'],
     ['*', '＊'],
     [',', '，'],
-    ['､', '、'],
     ['.', '．'],
-    ['｡', '。'],
     ['/', '／'],
     [':', '：'],
     [';', '；'],
@@ -121,8 +116,6 @@ export const TO_FULL_WIDTH_SIGN = {
     ['¢', '￠'],
     ['£', '￡'],
     ['¥', '￥'],
-    ['｢', '「'],
-    ['｣', '」'],
     ['₩', '￦'],
     ['+', '＋'],
     ['<', '＜'],
@@ -130,21 +123,19 @@ export const TO_FULL_WIDTH_SIGN = {
     ['>', '＞'],
     ['￨', '│'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * スペースの半角 -> 全角を変換する為のマップ
  */
-export const TO_FULL_WIDTH_SPACE = {
-  id: 'toFullWidthSpace',
+export const TO_FULL_WIDTH_SPACE: ConversionTable = {
   entries: [[' ', '　']],
-} as const satisfies ConversionTable;
+};
 
 /**
- * スペースの半角 -> 全角を変換する為のマップ
+ * 半角カナ（カタカナと、句読点・かぎ括弧・中黒・長音符・濁点・半濁点）の半角 -> 全角を変換する為のマップ
  */
-export const TO_FULL_WIDTH_KANA = {
-  id: 'toFullWidthKana',
+export const TO_FULL_WIDTH_KANA: ConversionTable = {
   entries: [
     ['ｧ', 'ァ'],
     ['ｱ', 'ア'],
@@ -228,22 +219,25 @@ export const TO_FULL_WIDTH_KANA = {
     ['ｦ', 'ヲ'],
     ['ﾝ', 'ン'],
     ['ｰ', 'ー'],
+    ['｡', '。'],
+    ['｢', '「'],
+    ['｣', '」'],
+    ['､', '、'],
     ['･', '・'],
     ['ﾞ', '゛'],
     ['ﾟ', '゜'],
   ],
-} as const satisfies ConversionTable;
+};
 
 /**
  * 半角 -> 全角を変換する為のマップ
  */
-export const TO_FULL_WIDTH = {
-  id: 'toFullWidth',
+export const TO_FULL_WIDTH: ConversionTable = {
   entries: [
     ...TO_FULL_WIDTH_ALPHABET.entries,
     ...TO_FULL_WIDTH_NUMBER.entries,
-    ...TO_FULL_WIDTH_SIGN.entries,
+    ...TO_FULL_WIDTH_SYMBOL.entries,
     ...TO_FULL_WIDTH_SPACE.entries,
     ...TO_FULL_WIDTH_KANA.entries,
   ],
-} as const satisfies ConversionTable;
+};

@@ -6,6 +6,10 @@ describe('toHiraganaSeion', () => {
     expect(toHiraganaSeion('がぎぐげご')).toBe('かきくけこ');
   });
 
+  it('濁音の踊り字（ゞ）を清音の踊り字（ゝ）に変換する', () => {
+    expect(toHiraganaSeion('ゞ')).toBe('ゝ');
+  });
+
   it('促音を清音に変換する', () => {
     expect(toHiraganaSeion('っ')).toBe('つ');
   });

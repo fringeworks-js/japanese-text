@@ -5,7 +5,6 @@ import { TO_KATAKANA } from '../toKatakana/constants';
 /**
  * カタカナ → ひらがなを変換する為のマップ
  */
-export const TO_HIRAGANA = {
-  id: 'toHiragana',
+export const TO_HIRAGANA: ConversionTable = {
   entries: swapPairs(TO_KATAKANA.entries),
-} as const satisfies ConversionTable;
+};

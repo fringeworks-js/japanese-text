@@ -1,5 +1,3 @@
-import { isBlank } from '@fringeworks/utils/type/isBlank';
-
 /**
  * NFKD（互換分解）\
  * 標準文字を互換文字に置き換えたうえで分解する。\
@@ -12,12 +10,12 @@ import { isBlank } from '@fringeworks/utils/type/isBlank';
  * - `㈱` → `(株)`
  * - `Ⅳ` → `IV`
  *
- * @param data
+ * @param str
  * @returns
  */
-export default function toNfkd(data: string): string {
-  if (isBlank(data)) {
-    return data;
+export default function toNfkd(str: string): string {
+  if (!str) {
+    return str;
   }
-  return data.normalize('NFKD');
+  return str.normalize('NFKD');
 }

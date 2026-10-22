@@ -4,8 +4,8 @@ import {
   TO_HALF_WIDTH_ALPHABET,
   TO_HALF_WIDTH_KANA,
   TO_HALF_WIDTH_NUMBER,
-  TO_HALF_WIDTH_SIGN,
   TO_HALF_WIDTH_SPACE,
+  TO_HALF_WIDTH_SYMBOL,
 } from './constants';
 import type { ToHalfWidthOptions } from './types';
 
@@ -21,17 +21,17 @@ export default function toHalfWidth(
   const {
     keepAlphabet = false,
     keepNumber = false,
-    keepSign = false,
+    keepSymbol = false,
     keepSpace = false,
     keepKana = false,
   } = options;
   const tables =
-    !keepAlphabet && !keepNumber && !keepSign && !keepSpace && !keepKana
+    !keepAlphabet && !keepNumber && !keepSymbol && !keepSpace && !keepKana
       ? [TO_HALF_WIDTH]
       : [
           !keepAlphabet && TO_HALF_WIDTH_ALPHABET,
           !keepNumber && TO_HALF_WIDTH_NUMBER,
-          !keepSign && TO_HALF_WIDTH_SIGN,
+          !keepSymbol && TO_HALF_WIDTH_SYMBOL,
           !keepSpace && TO_HALF_WIDTH_SPACE,
           !keepKana && TO_HALF_WIDTH_KANA,
         ];

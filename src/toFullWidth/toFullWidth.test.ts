@@ -36,4 +36,22 @@ describe('toFullWidth', () => {
       expect(toFullWidth('abc123', { keepNumber: true })).toBe('ａｂｃ123');
     });
   });
+
+  describe('keepSymbol', () => {
+    it('記号を変換しない', () => {
+      expect(toFullWidth('a!', { keepSymbol: true })).toBe('ａ!');
+    });
+  });
+
+  describe('keepKana', () => {
+    it('半角カナ（句読点・かぎ括弧・中黒を含む）を変換しない', () => {
+      expect(toFullWidth('ｱ｡｢｣､･!', { keepKana: true })).toBe('ｱ｡｢｣､･！');
+    });
+
+    it('句読点・かぎ括弧・中黒は keepSymbol の対象外', () => {
+      expect(toFullWidth('ｱ｡｢｣､･!', { keepSymbol: true })).toBe(
+        'ア。「」、・!',
+      );
+    });
+  });
 });

@@ -8,6 +8,12 @@ describe('getShiftJisByteLength', () => {
     expect(getShiftJisByteLength('aｱあ①')).toBe(6);
   });
 
+  it('エンコーダーが別の文字のバイト列で表す文字も数える', () => {
+    // 円記号・オーバーラインは1バイト、マイナス記号は全角のハイフンマイナスと同じ2バイト
+    expect(getShiftJisByteLength('¥‾')).toBe(2);
+    expect(getShiftJisByteLength('−')).toBe(2);
+  });
+
   it('制御文字は1バイトとして数える', () => {
     expect(getShiftJisByteLength('a\r\nb\t')).toBe(5);
   });
@@ -18,9 +24,7 @@ describe('getShiftJisByteLength', () => {
     expect(getShiftJisByteLength(String.fromCodePoint(0xe000))).toBeNull();
   });
 
-  it('空文字・null・undefinedは0を返す', () => {
+  it('空文字は0を返す', () => {
     expect(getShiftJisByteLength('')).toBe(0);
-    expect(getShiftJisByteLength(null)).toBe(0);
-    expect(getShiftJisByteLength(undefined)).toBe(0);
   });
 });

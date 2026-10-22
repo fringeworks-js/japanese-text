@@ -1,5 +1,3 @@
-import { isBlank } from '@fringeworks/utils/type/isBlank';
-
 /**
  * NFD（標準分解）\
  * 文字を基底文字と結合文字に分解する。\
@@ -8,12 +6,12 @@ import { isBlank } from '@fringeworks/utils/type/isBlank';
  * 例:
  * - `が` → `か` + `゛`（2文字）
  *
- * @param data
+ * @param str
  * @returns
  */
-export default function toNfd(data: string): string {
-  if (isBlank(data)) {
-    return data;
+export default function toNfd(str: string): string {
+  if (!str) {
+    return str;
   }
-  return data.normalize('NFD');
+  return str.normalize('NFD');
 }

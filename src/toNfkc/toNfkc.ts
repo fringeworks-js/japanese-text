@@ -1,5 +1,3 @@
-import { isBlank } from '@fringeworks/utils/type/isBlank';
-
 /**
  * NFKC（互換合成）\
  * 標準文字を互換文字に置き換えた上で合成する。\
@@ -15,9 +13,9 @@ import { isBlank } from '@fringeworks/utils/type/isBlank';
  * @param str
  * @returns
  */
-export default function toNfkc(data: string): string {
-  if (isBlank(data)) {
-    return data;
+export default function toNfkc(str: string): string {
+  if (!str) {
+    return str;
   }
-  return data.normalize('NFKC');
+  return str.normalize('NFKC');
 }

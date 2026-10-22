@@ -4,8 +4,7 @@ import type { ConversionTable } from '../_internal/_createConversionTableCompose
  * 空白文字を削除する為のマップ
  * 半角・全角スペース、タブ、ノーブレークスペースなど、改行以外の空白文字が対象
  */
-export const REMOVE_WHITESPACE = {
-  id: 'removeWhitespace',
+export const REMOVE_WHITESPACE: ConversionTable = {
   entries: [
     ['\t', ''],
     ['\v', ''],
@@ -29,4 +28,4 @@ export const REMOVE_WHITESPACE = {
     ['\u3000', ''],
     ['\uFEFF', ''],
   ],
-} as const satisfies ConversionTable;
+};

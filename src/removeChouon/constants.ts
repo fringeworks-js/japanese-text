@@ -3,7 +3,6 @@ import type { ConversionTable } from '../_internal/_createConversionTableCompose
 /**
  * 長音を削除する為のマップ
  */
-export const REMOVE_CHOUON = {
-  id: 'removeChouon',
+export const REMOVE_CHOUON: ConversionTable = {
   entries: [['ー', '']],
-} as const satisfies ConversionTable;
+};

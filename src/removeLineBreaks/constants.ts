@@ -3,8 +3,7 @@ import type { ConversionTable } from '../_internal/_createConversionTableCompose
 /**
  * 改行（CR、LF、Unicodeの行区切り・段落区切り）を削除する為のマップ
  */
-export const REMOVE_LINE_BREAKS = {
-  id: 'removeLineBreaks',
+export const REMOVE_LINE_BREAKS: ConversionTable = {
   entries: [
     ['\r\n', ''],
     ['\r', ''],
@@ -12,4 +11,4 @@ export const REMOVE_LINE_BREAKS = {
     ['\u2028', ''],
     ['\u2029', ''],
   ],
-} as const satisfies ConversionTable;
+};

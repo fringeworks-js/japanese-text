@@ -20,16 +20,16 @@ import {
   TO_FULL_WIDTH_ALPHABET,
   TO_FULL_WIDTH_KANA,
   TO_FULL_WIDTH_NUMBER,
-  TO_FULL_WIDTH_SIGN,
   TO_FULL_WIDTH_SPACE,
+  TO_FULL_WIDTH_SYMBOL,
 } from '../toFullWidth/constants';
 import {
   TO_HALF_WIDTH,
   TO_HALF_WIDTH_ALPHABET,
   TO_HALF_WIDTH_KANA,
   TO_HALF_WIDTH_NUMBER,
-  TO_HALF_WIDTH_SIGN,
   TO_HALF_WIDTH_SPACE,
+  TO_HALF_WIDTH_SYMBOL,
 } from '../toHalfWidth/constants';
 import { TO_HIRAGANA } from '../toHiragana/constants';
 import {
@@ -49,6 +49,14 @@ import { toNfc } from '../toNfc';
 import { toNfd } from '../toNfd';
 import { toNfkc } from '../toNfkc';
 import { toNfkd } from '../toNfkd';
+import { unifyChouon } from '../unifyChouon';
+import { unifyDoubleQuotes } from '../unifyDoubleQuotes';
+import { unifyHyphens } from '../unifyHyphens';
+import { unifyLineBreaks } from '../unifyLineBreaks';
+import { unifyMiddleDots } from '../unifyMiddleDots';
+import { unifySingleQuotes } from '../unifySingleQuotes';
+import { unifySpaces } from '../unifySpaces';
+import { unifyTildes } from '../unifyTildes';
 import type { TransformationType } from './constants';
 
 /**
@@ -57,32 +65,32 @@ import type { TransformationType } from './constants';
 export const TRANSFORMATION_TABLES: Partial<
   Record<TransformationType, ConversionTable>
 > = {
-  [TO_FULL_WIDTH.id]: TO_FULL_WIDTH,
-  [TO_FULL_WIDTH_ALPHABET.id]: TO_FULL_WIDTH_ALPHABET,
-  [TO_FULL_WIDTH_NUMBER.id]: TO_FULL_WIDTH_NUMBER,
-  [TO_FULL_WIDTH_SIGN.id]: TO_FULL_WIDTH_SIGN,
-  [TO_FULL_WIDTH_SPACE.id]: TO_FULL_WIDTH_SPACE,
-  [TO_FULL_WIDTH_KANA.id]: TO_FULL_WIDTH_KANA,
-  [TO_HALF_WIDTH.id]: TO_HALF_WIDTH,
-  [TO_HALF_WIDTH_ALPHABET.id]: TO_HALF_WIDTH_ALPHABET,
-  [TO_HALF_WIDTH_NUMBER.id]: TO_HALF_WIDTH_NUMBER,
-  [TO_HALF_WIDTH_SIGN.id]: TO_HALF_WIDTH_SIGN,
-  [TO_HALF_WIDTH_SPACE.id]: TO_HALF_WIDTH_SPACE,
-  [TO_HALF_WIDTH_KANA.id]: TO_HALF_WIDTH_KANA,
-  [TO_HIRAGANA.id]: TO_HIRAGANA,
-  [TO_HIRAGANA_SEION.id]: TO_HIRAGANA_SEION,
-  [TO_HIRAGANA_SEION_FROM_DAKUON.id]: TO_HIRAGANA_SEION_FROM_DAKUON,
-  [TO_HIRAGANA_SEION_FROM_SOKUON.id]: TO_HIRAGANA_SEION_FROM_SOKUON,
-  [TO_HIRAGANA_SEION_FROM_YOUON.id]: TO_HIRAGANA_SEION_FROM_YOUON,
-  [TO_KATAKANA.id]: TO_KATAKANA,
-  [TO_KATAKANA_SEION.id]: TO_KATAKANA_SEION,
-  [TO_KATAKANA_SEION_FROM_DAKUON.id]: TO_KATAKANA_SEION_FROM_DAKUON,
-  [TO_KATAKANA_SEION_FROM_SOKUON.id]: TO_KATAKANA_SEION_FROM_SOKUON,
-  [TO_KATAKANA_SEION_FROM_YOUON.id]: TO_KATAKANA_SEION_FROM_YOUON,
-  [REMOVE_CHOUON.id]: REMOVE_CHOUON,
-  [REMOVE_LINE_BREAKS.id]: REMOVE_LINE_BREAKS,
-  [REMOVE_WHITESPACE.id]: REMOVE_WHITESPACE,
-  [REMOVE_SPACES.id]: REMOVE_SPACES,
+  toFullWidth: TO_FULL_WIDTH,
+  toFullWidthAlphabet: TO_FULL_WIDTH_ALPHABET,
+  toFullWidthNumber: TO_FULL_WIDTH_NUMBER,
+  toFullWidthSymbol: TO_FULL_WIDTH_SYMBOL,
+  toFullWidthSpace: TO_FULL_WIDTH_SPACE,
+  toFullWidthKana: TO_FULL_WIDTH_KANA,
+  toHalfWidth: TO_HALF_WIDTH,
+  toHalfWidthAlphabet: TO_HALF_WIDTH_ALPHABET,
+  toHalfWidthNumber: TO_HALF_WIDTH_NUMBER,
+  toHalfWidthSymbol: TO_HALF_WIDTH_SYMBOL,
+  toHalfWidthSpace: TO_HALF_WIDTH_SPACE,
+  toHalfWidthKana: TO_HALF_WIDTH_KANA,
+  toHiragana: TO_HIRAGANA,
+  toHiraganaSeion: TO_HIRAGANA_SEION,
+  toHiraganaSeionFromDakuon: TO_HIRAGANA_SEION_FROM_DAKUON,
+  toHiraganaSeionFromSokuon: TO_HIRAGANA_SEION_FROM_SOKUON,
+  toHiraganaSeionFromYouon: TO_HIRAGANA_SEION_FROM_YOUON,
+  toKatakana: TO_KATAKANA,
+  toKatakanaSeion: TO_KATAKANA_SEION,
+  toKatakanaSeionFromDakuon: TO_KATAKANA_SEION_FROM_DAKUON,
+  toKatakanaSeionFromSokuon: TO_KATAKANA_SEION_FROM_SOKUON,
+  toKatakanaSeionFromYouon: TO_KATAKANA_SEION_FROM_YOUON,
+  removeChouon: REMOVE_CHOUON,
+  removeLineBreaks: REMOVE_LINE_BREAKS,
+  removeWhitespace: REMOVE_WHITESPACE,
+  removeSpaces: REMOVE_SPACES,
 };
 
 /**
@@ -107,4 +115,12 @@ export const TRANSFORMATION_FUNCTIONS: Partial<
   toNfd: toNfd,
   toNfkc: toNfkc,
   toNfkd: toNfkd,
+  unifyChouon: unifyChouon,
+  unifyDoubleQuotes: unifyDoubleQuotes,
+  unifyHyphens: unifyHyphens,
+  unifyLineBreaks: unifyLineBreaks,
+  unifyMiddleDots: unifyMiddleDots,
+  unifySingleQuotes: unifySingleQuotes,
+  unifySpaces: unifySpaces,
+  unifyTildes: unifyTildes,
 };

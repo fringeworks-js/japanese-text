@@ -9,9 +9,7 @@ import _getShiftJisCharByteLength from '../_internal/_getShiftJisCharByteLength'
  * @param str 文字列
  * @returns バイト数。Shift_JISで表せない文字がある場合はnull
  */
-export default function getShiftJisByteLength(
-  str: string | null | undefined,
-): number | null {
+export default function getShiftJisByteLength(str: string): number | null {
   if (!str) {
     return 0;
   }

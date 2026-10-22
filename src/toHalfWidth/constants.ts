@@ -5,54 +5,48 @@ import {
   TO_FULL_WIDTH_ALPHABET,
   TO_FULL_WIDTH_KANA,
   TO_FULL_WIDTH_NUMBER,
-  TO_FULL_WIDTH_SIGN,
   TO_FULL_WIDTH_SPACE,
+  TO_FULL_WIDTH_SYMBOL,
 } from '../toFullWidth/constants';
 
 /**
  * アルファベットの全角 -> 半角を変換する為のマップ
  */
-export const TO_HALF_WIDTH_ALPHABET = {
-  id: 'toHalfWidthAlphabet',
+export const TO_HALF_WIDTH_ALPHABET: ConversionTable = {
   entries: swapPairs(TO_FULL_WIDTH_ALPHABET.entries),
-} as const satisfies ConversionTable;
+};
 
 /**
  * 数字の全角 -> 半角を変換する為のマップ
  */
-export const TO_HALF_WIDTH_NUMBER = {
-  id: 'toHalfWidthNumber',
+export const TO_HALF_WIDTH_NUMBER: ConversionTable = {
   entries: swapPairs(TO_FULL_WIDTH_NUMBER.entries),
-} as const satisfies ConversionTable;
+};
 
 /**
  * 記号の全角 -> 半角を変換する為のマップ
  */
-export const TO_HALF_WIDTH_SIGN = {
-  id: 'toHalfWidthSign',
-  entries: swapPairs(TO_FULL_WIDTH_SIGN.entries),
-} as const satisfies ConversionTable;
+export const TO_HALF_WIDTH_SYMBOL: ConversionTable = {
+  entries: swapPairs(TO_FULL_WIDTH_SYMBOL.entries),
+};
 
 /**
  * スペースの全角 -> 半角を変換する為のマップ
  */
-export const TO_HALF_WIDTH_SPACE = {
-  id: 'toHalfWidthSpace',
+export const TO_HALF_WIDTH_SPACE: ConversionTable = {
   entries: swapPairs(TO_FULL_WIDTH_SPACE.entries),
-} as const satisfies ConversionTable;
+};
 
 /**
- * スペースの全角 -> 半角を変換する為のマップ
+ * 半角カナ（カタカナと、句読点・かぎ括弧・中黒・長音符・濁点・半濁点）の全角 -> 半角を変換する為のマップ
  */
-export const TO_HALF_WIDTH_KANA = {
-  id: 'toHalfWidthKana',
+export const TO_HALF_WIDTH_KANA: ConversionTable = {
   entries: swapPairs(TO_FULL_WIDTH_KANA.entries),
-} as const satisfies ConversionTable;
+};
 
 /**
  * 全角 -> 半角を変換する為のマップ
  */
-export const TO_HALF_WIDTH = {
-  id: 'toHalfWidth',
+export const TO_HALF_WIDTH: ConversionTable = {
   entries: swapPairs(TO_FULL_WIDTH.entries),
-} as const satisfies ConversionTable;
+};

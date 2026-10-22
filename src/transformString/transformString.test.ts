@@ -60,5 +60,34 @@ describe('transformString', () => {
       );
       expect(result).toBe('あいう');
     });
+
+    it('まとめたテーブルは指定した順番で後の変換が優先される', () => {
+      const options = { composeTables: true };
+      expect(
+        transformString(
+          'a b',
+          [
+            TransformationType.removeSpaces,
+            TransformationType.toFullWidthSpace,
+          ],
+          options,
+        ),
+      ).toBe('a　b');
+      expect(
+        transformString(
+          'a b',
+          [
+            TransformationType.toFullWidthSpace,
+            TransformationType.removeSpaces,
+          ],
+          options,
+        ),
+      ).toBe('ab');
+    });
+  });
+
+  it('readonly の配列を渡せる', () => {
+    const types = [TransformationType.toHiragana] as const;
+    expect(transformString('アイウ', types)).toBe('あいう');
   });
 });

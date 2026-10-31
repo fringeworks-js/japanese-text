@@ -5,11 +5,11 @@ import _getShiftJisCharByteLength from '../_internal/_getShiftJisCharByteLength'
  *
  * Shift_JISはWHATWG Encoding Standard の定義（Windows-31J相当）に従う。
  * 改行などの制御文字は1バイトとして数える。
- * Shift_JISで表せない文字（ユーザー定義領域（外字）を含む）がある場合はnull
+ * Shift_JISで表せない文字（ユーザー定義領域（外字）を含む）がある場合はundefined
  * @param str 文字列
- * @returns バイト数。Shift_JISで表せない文字がある場合はnull
+ * @returns バイト数。Shift_JISで表せない文字がある場合はundefined
  */
-export default function getShiftJisByteLength(str: string): number | null {
+export default function getShiftJisByteLength(str: string): number | undefined {
   if (!str) {
     return 0;
   }
@@ -23,7 +23,7 @@ export default function getShiftJisByteLength(str: string): number | null {
     }
     const charLength = _getShiftJisCharByteLength(codePoint);
     if (charLength === 0) {
-      return null;
+      return undefined;
     }
     length += charLength;
   }

@@ -18,10 +18,10 @@ describe('getShiftJisByteLength', () => {
     expect(getShiftJisByteLength('a\r\nb\t')).toBe(5);
   });
 
-  it('Shift_JISで表せない文字がある場合はnullを返す', () => {
-    expect(getShiftJisByteLength('a𠮷')).toBeNull();
-    expect(getShiftJisByteLength('😀')).toBeNull();
-    expect(getShiftJisByteLength(String.fromCodePoint(0xe000))).toBeNull();
+  it('Shift_JISで表せない文字がある場合はundefinedを返す', () => {
+    expect(getShiftJisByteLength('a𠮷')).toBeUndefined();
+    expect(getShiftJisByteLength('😀')).toBeUndefined();
+    expect(getShiftJisByteLength(String.fromCodePoint(0xe000))).toBeUndefined();
   });
 
   it('空文字は0を返す', () => {

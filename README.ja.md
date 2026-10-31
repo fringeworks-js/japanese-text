@@ -78,14 +78,14 @@ convertByTable('abc', MY_TABLE); // 'ABc'
 ### `getShiftJisByteLength`
 
 ```ts
-getShiftJisByteLength(str: string): number | null
+getShiftJisByteLength(str: string): number | undefined
 ```
 
-文字列を Shift_JIS で表した場合のバイト数を返します。Shift_JIS は WHATWG Encoding Standard の定義（Windows-31J 相当）に従い、ブラウザーが Shift_JIS のフォームを送信する際の変換と同じ範囲になります。改行などの制御文字は1バイトとして数えます。`¥`・`‾` は1バイト、マイナス記号（`−` U+2212）は2バイトとして数えます。これらはエンコーダーがそれぞれ `\`・`~`・`－`（U+FF0D）のバイト列で表すため、受け取った側でデコードすると別の文字になります。Shift_JIS で表せない文字（ユーザー定義領域の外字を含む）がある場合は `null` を返します。空文字の場合は `0` を返します。
+文字列を Shift_JIS で表した場合のバイト数を返します。Shift_JIS は WHATWG Encoding Standard の定義（Windows-31J 相当）に従い、ブラウザーが Shift_JIS のフォームを送信する際の変換と同じ範囲になります。改行などの制御文字は1バイトとして数えます。`¥`・`‾` は1バイト、マイナス記号（`−` U+2212）は2バイトとして数えます。これらはエンコーダーがそれぞれ `\`・`~`・`－`（U+FF0D）のバイト列で表すため、受け取った側でデコードすると別の文字になります。Shift_JIS で表せない文字（ユーザー定義領域の外字を含む）がある場合は `undefined` を返します。空文字の場合は `0` を返します。
 
 ```ts
 getShiftJisByteLength('aｱあ'); // 4
-getShiftJisByteLength('𠮷'); // null
+getShiftJisByteLength('𠮷'); // undefined
 ```
 
 ### `isFullWidth`

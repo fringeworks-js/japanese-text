@@ -78,14 +78,14 @@ convertByTable('abc', MY_TABLE); // 'ABc'
 ### `getShiftJisByteLength`
 
 ```ts
-getShiftJisByteLength(str: string): number | null
+getShiftJisByteLength(str: string): number | undefined
 ```
 
-Returns the byte length of a string encoded in Shift_JIS. Shift_JIS follows the WHATWG Encoding Standard (equivalent to Windows-31J), which is the same conversion browsers use when submitting a form in Shift_JIS. Control characters such as line breaks count as one byte. `¥` and `‾` count as one byte, and the minus sign (`−` U+2212) counts as two bytes. The encoder writes them as the bytes of `\`, `~`, and `－` (U+FF0D) respectively, so they become those characters when the receiver decodes them. Returns `null` when the string contains a character that Shift_JIS cannot represent (including user-defined characters). Returns `0` for an empty string.
+Returns the byte length of a string encoded in Shift_JIS. Shift_JIS follows the WHATWG Encoding Standard (equivalent to Windows-31J), which is the same conversion browsers use when submitting a form in Shift_JIS. Control characters such as line breaks count as one byte. `¥` and `‾` count as one byte, and the minus sign (`−` U+2212) counts as two bytes. The encoder writes them as the bytes of `\`, `~`, and `－` (U+FF0D) respectively, so they become those characters when the receiver decodes them. Returns `undefined` when the string contains a character that Shift_JIS cannot represent (including user-defined characters). Returns `0` for an empty string.
 
 ```ts
 getShiftJisByteLength('aｱあ'); // 4
-getShiftJisByteLength('𠮷'); // null
+getShiftJisByteLength('𠮷'); // undefined
 ```
 
 ### `isFullWidth`

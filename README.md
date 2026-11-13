@@ -8,8 +8,6 @@
 
 ```bash
 npm install @fringeworks/japanese-text
-# or
-pnpm add @fringeworks/japanese-text
 ```
 
 ## Usage

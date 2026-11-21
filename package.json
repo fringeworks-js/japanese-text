@@ -1,6 +1,6 @@
 {
   "name": "@fringeworks/japanese-text",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "private": true,
   "description": "A library some will find handy, for converting and checking Japanese text, such as kana, full-width and half-width characters, and Shift_JIS.",
   "keywords": [

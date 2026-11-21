@@ -10,16 +10,16 @@ const REGEX_DAKUTEN = /[\u3099-\u309c\uff9e\uff9f]/g;
 
 /**
  * 文字列の表記揺れを無くし、比較可能な形に整える
- * @param str 文字列
+ * @param data 文字列
  * @param options オプション
  * @returns 整えられた文字列
  */
 export default function normalizeString(
-  str: string,
+  data: string,
   options: NormalizeStringOptions = {},
 ): string {
-  if (!str) {
-    return str;
+  if (!data) {
+    return data;
   }
 
   const {
@@ -80,7 +80,7 @@ export default function normalizeString(
     );
   }
 
-  let result = str;
+  let result = data;
   if (ignoreDakuon) {
     // 単独の濁点・半濁点を除去する（濁音・半濁音の変換は後で行う）
     // 除去すると隣り合う文字が変わるため、前後の文字で判断する統一より先に行う。

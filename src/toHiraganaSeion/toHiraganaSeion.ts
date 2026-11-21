@@ -9,11 +9,11 @@ import type { ToHiraganaSeionOptions } from './types';
 
 /**
  * 濁音 -> 清音
- * @param str
+ * @param data
  * @returns
  */
 export default function toHiraganaSeion(
-  str: string,
+  data: string,
   options: ToHiraganaSeionOptions = {},
 ): string {
   const { keepDakuon = false, keepSokuon = false, keepYouon = false } = options;
@@ -26,5 +26,5 @@ export default function toHiraganaSeion(
           !keepYouon && TO_HIRAGANA_SEION_FROM_YOUON,
         ];
 
-  return convertByTable(str, tables);
+  return convertByTable(data, tables);
 }

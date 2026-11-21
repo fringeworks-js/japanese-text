@@ -1,6 +1,6 @@
 {
   "name": "@fringeworks/japanese-text",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "description": "A library some will find handy, for converting and checking Japanese text, such as kana, full-width and half-width characters, and Shift_JIS.",
   "keywords": [
@@ -39,10 +39,10 @@
     "tidy": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json}\" --config ./prettier.tidy.config.ts"
   },
   "dependencies": {
-    "@fringeworks/utils": "^2.3.0"
+    "@fringeworks/utils": "^2.4.0"
   },
   "devDependencies": {
-    "@fringeworks/dev": "^0.13.4",
+    "@fringeworks/dev": "^0.14.0",
     "@types/node": "^25.9.9",
     "@vitest/coverage-v8": "^4.1.12",
     "eslint": "^10.14.0",
@@ -52,5 +52,5 @@
     "typescript": "^6.0.3",
     "vitest": "^4.1.12"
   },
-  "packageManager": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457"
+  "packageManager": "pnpm@12.21.0"
 }

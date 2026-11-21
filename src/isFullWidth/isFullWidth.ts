@@ -7,14 +7,14 @@ import type { IsFullWidthOptions } from './types';
  * Unicode の East Asian Width（UAX #11）が W（Wide）・F（Fullwidth）の文字を全角とする。
  * 結合文字・ゼロ幅接合子・異体字セレクターは直前の文字の一部として扱う。
  * 空文字の場合はfalse
- * @param str 文字列
+ * @param data 文字列
  * @param options オプション
  * @returns
  */
 export default function isFullWidth(
-  str: string,
+  data: string,
   options: IsFullWidthOptions = {},
 ): boolean {
   const { ambiguousAs = 'full' } = options;
-  return _matchesWidth(str, 'full', ambiguousAs);
+  return _matchesWidth(data, 'full', ambiguousAs);
 }

@@ -11,11 +11,11 @@ import type { ToHalfWidthOptions } from './types';
 
 /**
  * 全角 -> 半角
- * @param str
+ * @param data
  * @returns
  */
 export default function toHalfWidth(
-  str: string,
+  data: string,
   options: ToHalfWidthOptions = {},
 ): string {
   const {
@@ -36,5 +36,5 @@ export default function toHalfWidth(
           !keepKana && TO_HALF_WIDTH_KANA,
         ];
 
-  return convertByTable(str, tables);
+  return convertByTable(data, tables);
 }

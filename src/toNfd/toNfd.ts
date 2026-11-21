@@ -6,12 +6,12 @@
  * 例:
  * - `が` → `か` + `゛`（2文字）
  *
- * @param str
+ * @param data
  * @returns
  */
-export default function toNfd(str: string): string {
-  if (!str) {
-    return str;
+export default function toNfd(data: string): string {
+  if (!data) {
+    return data;
   }
-  return str.normalize('NFD');
+  return data.normalize('NFD');
 }

@@ -5,6 +5,7 @@ export type TransformStringOptions = {
    *
    * - false: 纏めない
    * - true: 纏める
+   * @default false
    */
   composeTables?: boolean;
 };

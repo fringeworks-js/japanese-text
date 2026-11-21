@@ -11,11 +11,11 @@ import type { ToFullWidthOptions } from './types';
 
 /**
  * 半角 -> 全角
- * @param str
+ * @param data
  * @returns
  */
 export default function toFullWidth(
-  str: string,
+  data: string,
   options: ToFullWidthOptions = {},
 ): string {
   const {
@@ -36,5 +36,5 @@ export default function toFullWidth(
           !keepKana && TO_FULL_WIDTH_KANA,
         ];
 
-  return convertByTable(str, tables);
+  return convertByTable(data, tables);
 }

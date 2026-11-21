@@ -3,9 +3,9 @@ import { TO_HIRAGANA } from './constants';
 
 /**
  * カタカナ → ひらがな
- * @param str
+ * @param data
  * @returns
  */
-export default function toHiragana(str: string): string {
-  return convertByTable(str, TO_HIRAGANA);
+export default function toHiragana(data: string): string {
+  return convertByTable(data, TO_HIRAGANA);
 }

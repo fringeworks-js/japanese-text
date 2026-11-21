@@ -5,12 +5,14 @@ import type { NormalizeStringOptions } from '../normalizeString';
  */
 export type IsNormalizedEqualOptions = NormalizeStringOptions & {
   /**
-   * 値1の正規化を行わない
+   * `left` を正規化せずに比べる（正規化済みの値と比べるときに使う）
+   * @default false
    */
-  rawFirst?: boolean;
+  rawLeft?: boolean;
 
   /**
-   * 値2の正規化を行わない
+   * `right` を正規化せずに比べる（正規化済みの値と比べるときに使う）
+   * @default false
    */
-  rawSecond?: boolean;
+  rawRight?: boolean;
 };

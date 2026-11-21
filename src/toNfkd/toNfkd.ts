@@ -10,12 +10,12 @@
  * - `㈱` → `(株)`
  * - `Ⅳ` → `IV`
  *
- * @param str
+ * @param data
  * @returns
  */
-export default function toNfkd(str: string): string {
-  if (!str) {
-    return str;
+export default function toNfkd(data: string): string {
+  if (!data) {
+    return data;
   }
-  return str.normalize('NFKD');
+  return data.normalize('NFKD');
 }

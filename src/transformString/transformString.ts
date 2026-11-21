@@ -10,17 +10,18 @@ import type { TransformStringOptions } from './types';
 
 /**
  * 文字列へtypesで指定した順に変換を適用する
- * @param str
- * @param types
- * @returns
+ * @param data 文字列。空文字はそのまま返す
+ * @param types 適用する変換の種類。指定した順に適用する
+ * @param options オプション
+ * @returns 変換した文字列
  */
 export default function transformString(
-  str: string,
+  data: string,
   types: readonly TransformationType[],
   options: TransformStringOptions = {},
 ): string {
-  if (!str) {
-    return str;
+  if (!data) {
+    return data;
   }
 
   const { composeTables } = options;
@@ -52,5 +53,5 @@ export default function transformString(
       return convertByTable(result, tables);
     }
     return result;
-  }, str);
+  }, data);
 }

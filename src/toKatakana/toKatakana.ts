@@ -3,9 +3,9 @@ import { TO_KATAKANA } from './constants';
 
 /**
  * ひらがな -> カタカナ
- * @param str
+ * @param data
  * @returns
  */
-export default function toKatakana(str: string): string {
-  return convertByTable(str, TO_KATAKANA);
+export default function toKatakana(data: string): string {
+  return convertByTable(data, TO_KATAKANA);
 }

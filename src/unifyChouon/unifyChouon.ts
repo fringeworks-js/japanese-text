@@ -16,19 +16,19 @@ const REGEX_CHOUON = _createKanaContextPattern(CHOUON_VARIANTS);
  * （`サ―バ`、`メ-ル`、`すご〜い` など）だけを対象にし、
  * それ以外の位置（`1-2`、`東京―大阪`、`1〜3` など）はそのまま残す（`unifyHyphens` と対になる）。
  * 長音記号自体も対象にするため、`to` を指定すると長音記号もその文字にする
- * @param str 文字列。空文字はそのまま返す
+ * @param data 文字列。空文字はそのまま返す
  * @param options オプション
  * @returns 統一した文字列
  */
 export default function unifyChouon(
-  str: string,
+  data: string,
   options: UnifyChouonOptions = {},
 ): string {
-  if (!str) {
-    return str;
+  if (!data) {
+    return data;
   }
   const { to, always = false } = options;
-  return str.replace(
+  return data.replace(
     REGEX_CHOUON,
     (match: string, kana: string | undefined, chouons: string) => {
       if (always) {

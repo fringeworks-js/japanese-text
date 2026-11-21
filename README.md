@@ -23,41 +23,41 @@ import normalizeString from '@fringeworks/japanese-text/normalizeString';
 
 ## API
 
-| Function                                  | Description                                                               |
-| ----------------------------------------- | ------------------------------------------------------------------------- |
-| `convertByTable(str, tables)`             | Converts text according to conversion tables                              |
-| `getShiftJisByteLength(str)`              | Returns the byte length of a string in Shift_JIS                          |
-| `isFullWidth(str, options?)`              | Checks whether a string consists only of full-width characters            |
-| `isHalfWidth(str, options?)`              | Checks whether a string consists only of half-width characters            |
-| `isNormalizedEqual(str1, str2, options?)` | Checks whether two strings are equal after normalization                  |
-| `isShiftJisDoubleByte(str)`               | Checks whether a string consists only of Shift_JIS double-byte characters |
-| `isShiftJisSingleByte(str)`               | Checks whether a string consists only of Shift_JIS single-byte characters |
-| `normalizeString(str, options?)`          | Removes variations in notation to make strings comparable                 |
-| `removeChouon(str)`                       | Removes the prolonged sound mark (`ー`)                                   |
-| `removeLineBreaks(str)`                   | Removes line breaks                                                       |
-| `removeSpaces(str)`                       | Removes half-width and full-width spaces                                  |
-| `removeWhitespace(str)`                   | Removes whitespace other than line breaks                                 |
-| `toFullWidth(str, options?)`              | Converts half-width characters to full-width                              |
-| `toHalfWidth(str, options?)`              | Converts full-width characters to half-width                              |
-| `toHiragana(str)`                         | Converts katakana to hiragana                                             |
-| `toHiraganaSeion(str, options?)`          | Converts voiced, small, and geminate hiragana to their plain forms        |
-| `toKatakana(str)`                         | Converts hiragana to katakana                                             |
-| `toKatakanaSeion(str, options?)`          | Converts voiced, small, and geminate katakana to their plain forms        |
-| `toNfc(data)`, ...                        | Applies Unicode normalization                                             |
-| `transformString(str, types, options?)`   | Applies several conversions in order                                      |
-| `unifyChouon(str, options?)`              | Unifies symbols used in place of the prolonged sound mark                 |
-| `unifyDoubleQuotes(str, options?)`        | Unifies the kinds of double quotes                                        |
-| `unifyHyphens(str, options?)`             | Unifies symbols used in place of the hyphen into the hyphen               |
-| `unifyLineBreaks(str, options?)`          | Unifies the kinds of line breaks                                          |
-| `unifyMiddleDots(str, options?)`          | Unifies the kinds of middle dots                                          |
-| `unifySingleQuotes(str, options?)`        | Unifies the kinds of single quotes                                        |
-| `unifySpaces(str, options?)`              | Unifies the kinds of spaces                                               |
-| `unifyTildes(str, options?)`              | Unifies the kinds of tildes                                               |
+| Function                                   | Description                                                               |
+| ------------------------------------------ | ------------------------------------------------------------------------- |
+| `convertByTable(data, tables)`             | Converts text according to conversion tables                              |
+| `getShiftJisByteLength(data)`              | Returns the byte length of a string in Shift_JIS                          |
+| `isFullWidth(data, options?)`              | Checks whether a string consists only of full-width characters            |
+| `isHalfWidth(data, options?)`              | Checks whether a string consists only of half-width characters            |
+| `isNormalizedEqual(left, right, options?)` | Checks whether two strings are equal after normalization                  |
+| `isShiftJisDoubleByte(data)`               | Checks whether a string consists only of Shift_JIS double-byte characters |
+| `isShiftJisSingleByte(data)`               | Checks whether a string consists only of Shift_JIS single-byte characters |
+| `normalizeString(data, options?)`          | Removes variations in notation to make strings comparable                 |
+| `removeChouon(data)`                       | Removes the prolonged sound mark (`ー`)                                   |
+| `removeLineBreaks(data)`                   | Removes line breaks                                                       |
+| `removeSpaces(data)`                       | Removes half-width and full-width spaces                                  |
+| `removeWhitespace(data)`                   | Removes whitespace other than line breaks                                 |
+| `toFullWidth(data, options?)`              | Converts half-width characters to full-width                              |
+| `toHalfWidth(data, options?)`              | Converts full-width characters to half-width                              |
+| `toHiragana(data)`                         | Converts katakana to hiragana                                             |
+| `toHiraganaSeion(data, options?)`          | Converts voiced, small, and geminate hiragana to their plain forms        |
+| `toKatakana(data)`                         | Converts hiragana to katakana                                             |
+| `toKatakanaSeion(data, options?)`          | Converts voiced, small, and geminate katakana to their plain forms        |
+| `toNfc(data)`, ...                         | Applies Unicode normalization                                             |
+| `transformString(data, types, options?)`   | Applies several conversions in order                                      |
+| `unifyChouon(data, options?)`              | Unifies symbols used in place of the prolonged sound mark                 |
+| `unifyDoubleQuotes(data, options?)`        | Unifies the kinds of double quotes                                        |
+| `unifyHyphens(data, options?)`             | Unifies symbols used in place of the hyphen into the hyphen               |
+| `unifyLineBreaks(data, options?)`          | Unifies the kinds of line breaks                                          |
+| `unifyMiddleDots(data, options?)`          | Unifies the kinds of middle dots                                          |
+| `unifySingleQuotes(data, options?)`        | Unifies the kinds of single quotes                                        |
+| `unifySpaces(data, options?)`              | Unifies the kinds of spaces                                               |
+| `unifyTildes(data, options?)`              | Unifies the kinds of tildes                                               |
 
 ### `convertByTable`
 
 ```ts
-convertByTable(str: string, tables: ConversionTable | (ConversionTable | false | null | undefined)[]): string
+convertByTable(data: string, tables: ConversionTable | readonly (ConversionTable | false | null | undefined)[]): string
 ```
 
 Converts text according to conversion tables. Several tables are merged into one before conversion. `false`, `null` and `undefined` in the array are ignored, so tables can be listed conditionally, as in `[useKana && TO_HIRAGANA]`. When several tables have the same source string, the later table wins. Merged tables and converters are cached for each combination of table objects and their order. Creating a table on every call defeats the cache, so define tables as constants and reuse them.
@@ -76,7 +76,7 @@ convertByTable('abc', MY_TABLE); // 'ABc'
 ### `getShiftJisByteLength`
 
 ```ts
-getShiftJisByteLength(str: string): number | undefined
+getShiftJisByteLength(data: string): number | undefined
 ```
 
 Returns the byte length of a string encoded in Shift_JIS. Shift_JIS follows the WHATWG Encoding Standard (equivalent to Windows-31J), which is the same conversion browsers use when submitting a form in Shift_JIS. Control characters such as line breaks count as one byte. `¥` and `‾` count as one byte, and the minus sign (`−` U+2212) counts as two bytes. The encoder writes them as the bytes of `\`, `~`, and `－` (U+FF0D) respectively, so they become those characters when the receiver decodes them. Returns `undefined` when the string contains a character that Shift_JIS cannot represent (including user-defined characters). Returns `0` for an empty string.
@@ -89,7 +89,7 @@ getShiftJisByteLength('𠮷'); // undefined
 ### `isFullWidth`
 
 ```ts
-isFullWidth(str: string, options?: IsFullWidthOptions): boolean
+isFullWidth(data: string, options?: IsFullWidthOptions): boolean
 ```
 
 Checks whether a string consists only of full-width characters. Characters whose Unicode East Asian Width (UAX #11) is W (Wide) or F (Fullwidth) are full-width, including emoji. Control characters such as line breaks and tabs, and characters with no full-width/half-width distinction such as Thai (N), are neither. Combining characters, zero-width joiners, and variation selectors are treated as part of the preceding character. Returns `false` for an empty string.
@@ -108,7 +108,7 @@ isFullWidth('①○', { ambiguousAs: 'half' }); // false
 ### `isHalfWidth`
 
 ```ts
-isHalfWidth(str: string, options?: IsHalfWidthOptions): boolean
+isHalfWidth(data: string, options?: IsHalfWidthOptions): boolean
 ```
 
 Checks whether a string consists only of half-width characters. Characters whose East Asian Width is Na (Narrow) or H (Halfwidth) are half-width. Everything else, including the options, works the same as `isFullWidth`. Because characters of ambiguous width are treated as full-width by default, a string containing `é` and the like returns `false`.
@@ -122,7 +122,7 @@ isHalfWidth('café', { ambiguousAs: 'half' }); // true
 ### `isNormalizedEqual`
 
 ```ts
-isNormalizedEqual(str1: string, str2: string, options?: IsNormalizedEqualOptions): boolean
+isNormalizedEqual(left: string, right: string, options?: IsNormalizedEqualOptions): boolean
 ```
 
 Normalizes two strings with `normalizeString` and checks whether they are equal. How to normalize is set with the options of `normalizeString` (nothing is normalized if none are given).
@@ -131,16 +131,16 @@ Normalizes two strings with `normalizeString` and checks whether they are equal.
 isNormalizedEqual('ＡＢＣ', 'abc', { ignoreWidth: true, ignoreCase: true }); // true
 ```
 
-| Option         | Type                     | Description                         |
-| -------------- | ------------------------ | ----------------------------------- |
-| `rawFirst?`    | `boolean`                | If `true`, `str1` is not normalized |
-| `rawSecond?`   | `boolean`                | If `true`, `str2` is not normalized |
-| `ignore*`, ... | `NormalizeStringOptions` | Options of `normalizeString`        |
+| Option         | Type                     | Description                                                                                  |
+| -------------- | ------------------------ | -------------------------------------------------------------------------------------------- |
+| `rawLeft?`     | `boolean`                | If `true`, `left` is not normalized (use it when comparing with an already normalized value) |
+| `rawRight?`    | `boolean`                | If `true`, `right` is not normalized                                                         |
+| `ignore*`, ... | `NormalizeStringOptions` | Options of `normalizeString`                                                                 |
 
 ### `isShiftJisDoubleByte`
 
 ```ts
-isShiftJisDoubleByte(str: string): boolean
+isShiftJisDoubleByte(data: string): boolean
 ```
 
 Checks whether a string consists only of Shift_JIS double-byte characters (JIS X 0208 characters and Windows-31J extensions such as `①`). Shift_JIS is defined as in `getShiftJisByteLength`. The wave dash (`〜` U+301C) cannot be represented in Windows-31J, so strings containing it return `false`. The minus sign (`−` U+2212) is treated as a double-byte character, since it can be written as the bytes of the full-width hyphen-minus (`－` U+FF0D). Returns `false` for an empty string.
@@ -148,7 +148,7 @@ Checks whether a string consists only of Shift_JIS double-byte characters (JIS X
 ### `isShiftJisSingleByte`
 
 ```ts
-isShiftJisSingleByte(str: string): boolean
+isShiftJisSingleByte(data: string): boolean
 ```
 
 Checks whether a string consists only of Shift_JIS single-byte characters (printable ASCII, half-width katakana, `¥`, and `‾`). Control characters are not included. Returns `false` for an empty string.
@@ -156,7 +156,7 @@ Checks whether a string consists only of Shift_JIS single-byte characters (print
 ### `normalizeString`
 
 ```ts
-normalizeString(str: string, options?: NormalizeStringOptions): string
+normalizeString(data: string, options?: NormalizeStringOptions): string
 ```
 
 Removes variations in notation, such as full-width and half-width forms or upper and lower case, so that strings can be searched and compared. The options choose which differences to remove (nothing is converted if none are given).
@@ -195,7 +195,7 @@ normalizeString('㈱ｶﾞ', { ignoreCompatibility: true }); // '(株)ガ'
 ### `removeChouon`
 
 ```ts
-removeChouon(str: string): string
+removeChouon(data: string): string
 ```
 
 Removes the prolonged sound mark (`ー`). The half-width mark (`ｰ`) is not removed. To remove it as well, convert it to full-width with `toFullWidth` first.
@@ -203,7 +203,7 @@ Removes the prolonged sound mark (`ー`). The half-width mark (`ｰ`) is not rem
 ### `removeLineBreaks`
 
 ```ts
-removeLineBreaks(str: string): string
+removeLineBreaks(data: string): string
 ```
 
 Removes line breaks (CR, LF, CRLF, and the Unicode line separator U+2028 and paragraph separator U+2029).
@@ -211,7 +211,7 @@ Removes line breaks (CR, LF, CRLF, and the Unicode line separator U+2028 and par
 ### `removeSpaces`
 
 ```ts
-removeSpaces(str: string): string
+removeSpaces(data: string): string
 ```
 
 Removes half-width and full-width spaces. Use `removeWhitespace` to remove other whitespace such as tabs as well.
@@ -219,7 +219,7 @@ Removes half-width and full-width spaces. Use `removeWhitespace` to remove other
 ### `removeWhitespace`
 
 ```ts
-removeWhitespace(str: string): string
+removeWhitespace(data: string): string
 ```
 
 Removes whitespace other than line breaks (half-width and full-width spaces, tabs, no-break spaces, spaces of various widths, and so on). Use `removeLineBreaks` to remove line breaks.
@@ -227,7 +227,7 @@ Removes whitespace other than line breaks (half-width and full-width spaces, tab
 ### `toFullWidth`
 
 ```ts
-toFullWidth(str: string, options?: ToFullWidthOptions): string
+toFullWidth(data: string, options?: ToFullWidthOptions): string
 ```
 
 Converts half-width letters, digits, symbols, spaces, and kana to full-width. Kana covers the whole half-width kana set (katakana and `｡`, `｢`, `｣`, `､`, `･`, `ｰ`, `ﾞ`, `ﾟ`). `ﾜﾞ` and `ｦﾞ` become `ワ゛` and `ヲ゛`, not the precomposed `ヷ` and `ヺ`.
@@ -248,7 +248,7 @@ toFullWidth('abc 123', { keepNumber: true }); // 'ａｂｃ　123'
 ### `toHalfWidth`
 
 ```ts
-toHalfWidth(str: string, options?: ToHalfWidthOptions): string
+toHalfWidth(data: string, options?: ToHalfWidthOptions): string
 ```
 
 Converts full-width letters, digits, symbols, spaces, and kana to half-width. The target characters and options are the same as `toFullWidth`. Characters without a half-width form (`ヰ`, `ヵ`, `ヷ`, ...) are left as is.
@@ -256,8 +256,8 @@ Converts full-width letters, digits, symbols, spaces, and kana to half-width. Th
 ### `toHiragana` / `toKatakana`
 
 ```ts
-toHiragana(str: string): string
-toKatakana(str: string): string
+toHiragana(data: string): string
+toKatakana(data: string): string
 ```
 
 Converts katakana to hiragana (`toHiragana`) or hiragana to katakana (`toKatakana`). Only full-width kana are converted. To convert half-width katakana as well, convert it to full-width with `toFullWidth` first. `ヵ` and `ヶ` (often used as counters, as in `3ヶ月`) and `ヷ`, `ヸ`, `ヹ`, `ヺ` (which have no hiragana counterpart) are not converted.
@@ -265,8 +265,8 @@ Converts katakana to hiragana (`toHiragana`) or hiragana to katakana (`toKatakan
 ### `toHiraganaSeion` / `toKatakanaSeion`
 
 ```ts
-toHiraganaSeion(str: string, options?: ToHiraganaSeionOptions): string
-toKatakanaSeion(str: string, options?: ToKatakanaSeionOptions): string
+toHiraganaSeion(data: string, options?: ToHiraganaSeionOptions): string
+toKatakanaSeion(data: string, options?: ToKatakanaSeionOptions): string
 ```
 
 Converts voiced and semi-voiced kana, the small `っ`, and other small kana in hiragana (`toHiraganaSeion`) or katakana (`toKatakanaSeion`) to their plain forms. The voiced iteration marks (`ゞ`, `ヾ`) also become plain iteration marks. Only full-width kana are converted; half-width katakana and `ヷ`, `ヸ`, `ヹ`, `ヺ` are left as is.
@@ -303,7 +303,7 @@ Applies Unicode normalization with `String.prototype.normalize`.
 ### `transformString`
 
 ```ts
-transformString(str: string, types: TransformationType[], options?: TransformStringOptions): string
+transformString(data: string, types: readonly TransformationType[], options?: TransformStringOptions): string
 ```
 
 Applies the conversions in `types` in the given order.
@@ -332,8 +332,8 @@ The available conversions (values of `TransformationType`) are:
 ### `unifyChouon` / `unifyHyphens`
 
 ```ts
-unifyChouon(str: string, options?: UnifyChouonOptions): string
-unifyHyphens(str: string, options?: UnifyHyphensOptions): string
+unifyChouon(data: string, options?: UnifyChouonOptions): string
+unifyHyphens(data: string, options?: UnifyHyphensOptions): string
 ```
 
 The prolonged sound mark and the hyphen are often written with similar horizontal symbols, so they are told apart by the preceding character. A horizontal symbol right after kana (full-width hiragana and katakana and half-width katakana, including voiced marks and iteration marks) is treated as the prolonged sound mark, and any other one as a hyphen. The two functions are exact counterparts: applying either first, or both, gives the same result.
@@ -358,12 +358,12 @@ unifyHyphens('サーバ 1－2', { always: true }); // 'サ-バ 1-2'
 ### `unifySpaces` and others
 
 ```ts
-unifySpaces(str: string, options?: UnifySpacesOptions): string
-unifyLineBreaks(str: string, options?: UnifyLineBreaksOptions): string
-unifyTildes(str: string, options?: UnifyTildesOptions): string
-unifyMiddleDots(str: string, options?: UnifyMiddleDotsOptions): string
-unifyDoubleQuotes(str: string, options?: UnifyDoubleQuotesOptions): string
-unifySingleQuotes(str: string, options?: UnifySingleQuotesOptions): string
+unifySpaces(data: string, options?: UnifySpacesOptions): string
+unifyLineBreaks(data: string, options?: UnifyLineBreaksOptions): string
+unifyTildes(data: string, options?: UnifyTildesOptions): string
+unifyMiddleDots(data: string, options?: UnifyMiddleDotsOptions): string
+unifyDoubleQuotes(data: string, options?: UnifyDoubleQuotesOptions): string
+unifySingleQuotes(data: string, options?: UnifySingleQuotesOptions): string
 ```
 
 Unifies different characters of the same kind into one character, without looking at the surrounding characters. The target characters are listed in each function's constant.
@@ -391,17 +391,26 @@ unifyDoubleQuotes('“a”'); // '"a"'
 
 ### Constants
 
-| Constant                | Description                                                     |
-| ----------------------- | --------------------------------------------------------------- |
-| `TransformationType`    | The conversions that can be passed to `transformString`         |
-| `CHOUON_VARIANTS`       | The characters `unifyChouon` treats as the prolonged sound mark |
-| `HYPHEN_VARIANTS`       | The characters `unifyHyphens` treats as hyphens                 |
-| `SPACE_VARIANTS`        | The characters `unifySpaces` unifies                            |
-| `LINE_BREAK_VARIANTS`   | The characters `unifyLineBreaks` unifies                        |
-| `TILDE_VARIANTS`        | The characters `unifyTildes` unifies                            |
-| `MIDDLE_DOT_VARIANTS`   | The characters `unifyMiddleDots` unifies                        |
-| `DOUBLE_QUOTE_VARIANTS` | The characters `unifyDoubleQuotes` unifies                      |
-| `SINGLE_QUOTE_VARIANTS` | The characters `unifySingleQuotes` unifies                      |
+| Constant                                                                                                              | Description                                                                                         |
+| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `TransformationType`                                                                                                  | The conversions that can be passed to `transformString`                                             |
+| `CHOUON_VARIANTS`                                                                                                     | The characters `unifyChouon` treats as the prolonged sound mark                                     |
+| `HYPHEN_VARIANTS`                                                                                                     | The characters `unifyHyphens` treats as hyphens                                                     |
+| `SPACE_VARIANTS`                                                                                                      | The characters `unifySpaces` unifies                                                                |
+| `LINE_BREAK_VARIANTS`                                                                                                 | The characters `unifyLineBreaks` unifies                                                            |
+| `TILDE_VARIANTS`                                                                                                      | The characters `unifyTildes` unifies                                                                |
+| `MIDDLE_DOT_VARIANTS`                                                                                                 | The characters `unifyMiddleDots` unifies                                                            |
+| `DOUBLE_QUOTE_VARIANTS`                                                                                               | The characters `unifyDoubleQuotes` unifies                                                          |
+| `SINGLE_QUOTE_VARIANTS`                                                                                               | The characters `unifySingleQuotes` unifies                                                          |
+| `TO_FULL_WIDTH`                                                                                                       | The conversion table of `toFullWidth` (the five below combined)                                     |
+| `TO_FULL_WIDTH_ALPHABET`, `TO_FULL_WIDTH_NUMBER`, `TO_FULL_WIDTH_SYMBOL`, `TO_FULL_WIDTH_SPACE`, `TO_FULL_WIDTH_KANA` | Conversion tables that make letters, digits, symbols, spaces, and katakana full-width               |
+| `TO_HALF_WIDTH`                                                                                                       | The conversion table of `toHalfWidth` (the five below combined)                                     |
+| `TO_HALF_WIDTH_ALPHABET`, `TO_HALF_WIDTH_NUMBER`, `TO_HALF_WIDTH_SYMBOL`, `TO_HALF_WIDTH_SPACE`, `TO_HALF_WIDTH_KANA` | Conversion tables that make letters, digits, symbols, spaces, and katakana half-width               |
+| `TO_HIRAGANA`, `TO_KATAKANA`                                                                                          | The conversion tables of `toHiragana` and `toKatakana`                                              |
+| `TO_HIRAGANA_SEION`, `TO_KATAKANA_SEION`                                                                              | The conversion tables of `toHiraganaSeion` and `toKatakanaSeion` (the three below combined)         |
+| `TO_HIRAGANA_SEION_FROM_DAKUON`, `TO_HIRAGANA_SEION_FROM_SOKUON`, `TO_HIRAGANA_SEION_FROM_YOUON`                      | Conversion tables that turn voiced, small tsu, and small ya/yu/yo hiragana into their plain forms   |
+| `TO_KATAKANA_SEION_FROM_DAKUON`, `TO_KATAKANA_SEION_FROM_SOKUON`, `TO_KATAKANA_SEION_FROM_YOUON`                      | Conversion tables that turn voiced, small tsu, and small ya/yu/yo katakana into their plain forms   |
+| `REMOVE_CHOUON`, `REMOVE_LINE_BREAKS`, `REMOVE_SPACES`, `REMOVE_WHITESPACE`                                           | The conversion tables of `removeChouon`, `removeLineBreaks`, `removeSpaces`, and `removeWhitespace` |
 
 ### Types
 

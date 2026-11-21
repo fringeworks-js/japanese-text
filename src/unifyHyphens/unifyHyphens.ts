@@ -22,19 +22,19 @@ const HYPHEN_SET: ReadonlySet<string> = new Set(HYPHEN_VARIANTS);
  * かな（全角のひらがな・カタカナと半角カタカナ）の直後にない `HYPHEN_VARIANTS` の文字
  * （`1－2`、`123ー4567`、`東京―大阪` など）だけを対象にし、
  * かなの直後にあるもの（`サーバ`、`サ―バ` など）は長音としてそのまま残す（`unifyChouon` と対になる）
- * @param str 文字列。空文字はそのまま返す
+ * @param data 文字列。空文字はそのまま返す
  * @param options オプション
  * @returns 統一した文字列
  */
 export default function unifyHyphens(
-  str: string,
+  data: string,
   options: UnifyHyphensOptions = {},
 ): string {
-  if (!str) {
-    return str;
+  if (!data) {
+    return data;
   }
   const { to = '-', always = false } = options;
-  return str.replace(
+  return data.replace(
     REGEX_CHOUON,
     (match: string, kana: string | undefined, chars: string) => {
       if (kana && !always) {

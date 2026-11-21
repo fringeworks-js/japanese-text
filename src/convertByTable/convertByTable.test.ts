@@ -22,6 +22,12 @@ describe('convertByTable', () => {
     expect(convertByTable('AB', [false, table, null, undefined])).toBe('ab');
   });
 
+  it('readonly の配列でテーブルを渡せる', () => {
+    const table2: ConversionTable = { entries: [['C', 'c']] };
+    const tables = [table, table2] as const;
+    expect(convertByTable('ABC', tables)).toBe('abc');
+  });
+
   it('as const で定義したテーブルを渡せる', () => {
     const constTable = { entries: [['x', 'y']] } as const;
     expect(convertByTable('x', constTable)).toBe('y');

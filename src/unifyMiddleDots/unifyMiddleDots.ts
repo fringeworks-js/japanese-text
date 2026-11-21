@@ -6,13 +6,13 @@ const _unify = _createUnifier(MIDDLE_DOT_VARIANTS, '・');
 
 /**
  * 中黒（全角・半角の中黒、欧文の中点など）を、1種類の中黒に統一する
- * @param str 文字列。空文字はそのまま返す
+ * @param data 文字列。空文字はそのまま返す
  * @param options オプション
  * @returns 統一した文字列
  */
 export default function unifyMiddleDots(
-  str: string,
+  data: string,
   options: UnifyMiddleDotsOptions = {},
 ): string {
-  return _unify(str, options.to);
+  return _unify(data, options.to);
 }

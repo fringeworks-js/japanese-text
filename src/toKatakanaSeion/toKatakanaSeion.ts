@@ -9,11 +9,11 @@ import type { ToKatakanaSeionOptions } from './types';
 
 /**
  * 濁音 -> 清音
- * @param str
+ * @param data
  * @returns
  */
 export default function toKatakanaSeion(
-  str: string,
+  data: string,
   options: ToKatakanaSeionOptions = {},
 ): string {
   const { keepDakuon = false, keepSokuon = false, keepYouon = false } = options;
@@ -26,5 +26,5 @@ export default function toKatakanaSeion(
           !keepYouon && TO_KATAKANA_SEION_FROM_YOUON,
         ];
 
-  return convertByTable(str, tables);
+  return convertByTable(data, tables);
 }

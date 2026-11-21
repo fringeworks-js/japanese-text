@@ -23,41 +23,41 @@ import normalizeString from '@fringeworks/japanese-text/normalizeString';
 
 ## API
 
-| 関数                                      | 説明                                                  |
-| ----------------------------------------- | ----------------------------------------------------- |
-| `convertByTable(str, tables)`             | 変換テーブルに従って文字列を変換する                  |
-| `getShiftJisByteLength(str)`              | Shift_JIS で表した場合のバイト数を返す                |
-| `isFullWidth(str, options?)`              | 全角の文字だけで構成されているか判定する              |
-| `isHalfWidth(str, options?)`              | 半角の文字だけで構成されているか判定する              |
-| `isNormalizedEqual(str1, str2, options?)` | 正規化してから2つの文字列が等しいか判定する           |
-| `isShiftJisDoubleByte(str)`               | Shift_JIS の2バイト文字だけで構成されているか判定する |
-| `isShiftJisSingleByte(str)`               | Shift_JIS の1バイト文字だけで構成されているか判定する |
-| `normalizeString(str, options?)`          | 表記の揺れを無くし、比較できる形にする                |
-| `removeChouon(str)`                       | 長音符（`ー`）を削除する                              |
-| `removeLineBreaks(str)`                   | 改行を削除する                                        |
-| `removeSpaces(str)`                       | 半角スペース・全角スペースを削除する                  |
-| `removeWhitespace(str)`                   | 改行以外の空白文字を削除する                          |
-| `toFullWidth(str, options?)`              | 半角の文字を全角にする                                |
-| `toHalfWidth(str, options?)`              | 全角の文字を半角にする                                |
-| `toHiragana(str)`                         | カタカナをひらがなにする                              |
-| `toHiraganaSeion(str, options?)`          | ひらがなの濁音・半濁音・促音・拗音を清音にする        |
-| `toKatakana(str)`                         | ひらがなをカタカナにする                              |
-| `toKatakanaSeion(str, options?)`          | カタカナの濁音・半濁音・促音・拗音を清音にする        |
-| `toNfc(data)` など                        | Unicode 正規化を行う                                  |
-| `transformString(str, types, options?)`   | 複数の変換を順番に適用する                            |
-| `unifyChouon(str, options?)`              | 長音の代わりに使われた記号を長音符にそろえる          |
-| `unifyDoubleQuotes(str, options?)`        | 二重引用符の種類をそろえる                            |
-| `unifyHyphens(str, options?)`             | ハイフンの代わりに使われた記号をハイフンにそろえる    |
-| `unifyLineBreaks(str, options?)`          | 改行の種類をそろえる                                  |
-| `unifyMiddleDots(str, options?)`          | 中黒の種類をそろえる                                  |
-| `unifySingleQuotes(str, options?)`        | 一重引用符の種類をそろえる                            |
-| `unifySpaces(str, options?)`              | スペースの種類をそろえる                              |
-| `unifyTildes(str, options?)`              | 波線の種類をそろえる                                  |
+| 関数                                       | 説明                                                  |
+| ------------------------------------------ | ----------------------------------------------------- |
+| `convertByTable(data, tables)`             | 変換テーブルに従って文字列を変換する                  |
+| `getShiftJisByteLength(data)`              | Shift_JIS で表した場合のバイト数を返す                |
+| `isFullWidth(data, options?)`              | 全角の文字だけで構成されているか判定する              |
+| `isHalfWidth(data, options?)`              | 半角の文字だけで構成されているか判定する              |
+| `isNormalizedEqual(left, right, options?)` | 正規化してから2つの文字列が等しいか判定する           |
+| `isShiftJisDoubleByte(data)`               | Shift_JIS の2バイト文字だけで構成されているか判定する |
+| `isShiftJisSingleByte(data)`               | Shift_JIS の1バイト文字だけで構成されているか判定する |
+| `normalizeString(data, options?)`          | 表記の揺れを無くし、比較できる形にする                |
+| `removeChouon(data)`                       | 長音符（`ー`）を削除する                              |
+| `removeLineBreaks(data)`                   | 改行を削除する                                        |
+| `removeSpaces(data)`                       | 半角スペース・全角スペースを削除する                  |
+| `removeWhitespace(data)`                   | 改行以外の空白文字を削除する                          |
+| `toFullWidth(data, options?)`              | 半角の文字を全角にする                                |
+| `toHalfWidth(data, options?)`              | 全角の文字を半角にする                                |
+| `toHiragana(data)`                         | カタカナをひらがなにする                              |
+| `toHiraganaSeion(data, options?)`          | ひらがなの濁音・半濁音・促音・拗音を清音にする        |
+| `toKatakana(data)`                         | ひらがなをカタカナにする                              |
+| `toKatakanaSeion(data, options?)`          | カタカナの濁音・半濁音・促音・拗音を清音にする        |
+| `toNfc(data)` など                         | Unicode 正規化を行う                                  |
+| `transformString(data, types, options?)`   | 複数の変換を順番に適用する                            |
+| `unifyChouon(data, options?)`              | 長音の代わりに使われた記号を長音符にそろえる          |
+| `unifyDoubleQuotes(data, options?)`        | 二重引用符の種類をそろえる                            |
+| `unifyHyphens(data, options?)`             | ハイフンの代わりに使われた記号をハイフンにそろえる    |
+| `unifyLineBreaks(data, options?)`          | 改行の種類をそろえる                                  |
+| `unifyMiddleDots(data, options?)`          | 中黒の種類をそろえる                                  |
+| `unifySingleQuotes(data, options?)`        | 一重引用符の種類をそろえる                            |
+| `unifySpaces(data, options?)`              | スペースの種類をそろえる                              |
+| `unifyTildes(data, options?)`              | 波線の種類をそろえる                                  |
 
 ### `convertByTable`
 
 ```ts
-convertByTable(str: string, tables: ConversionTable | (ConversionTable | false | null | undefined)[]): string
+convertByTable(data: string, tables: ConversionTable | readonly (ConversionTable | false | null | undefined)[]): string
 ```
 
 変換テーブルに従って文字列を変換します。複数のテーブルを指定した場合は1つにまとめて変換します。配列の中の `false`・`null`・`undefined` は無視するので、`[useKana && TO_HIRAGANA]` のように条件付きでテーブルを並べられます。同じ変換前の文字列が複数のテーブルにある場合は、後のテーブルが優先されます。まとめたテーブルと変換の処理は、テーブルのオブジェクトと順番の組み合わせごとにキャッシュします。呼び出すたびにテーブルを作るとキャッシュが効かないため、テーブルは定数として定義して使い回します。
@@ -76,7 +76,7 @@ convertByTable('abc', MY_TABLE); // 'ABc'
 ### `getShiftJisByteLength`
 
 ```ts
-getShiftJisByteLength(str: string): number | undefined
+getShiftJisByteLength(data: string): number | undefined
 ```
 
 文字列を Shift_JIS で表した場合のバイト数を返します。Shift_JIS は WHATWG Encoding Standard の定義（Windows-31J 相当）に従い、ブラウザーが Shift_JIS のフォームを送信する際の変換と同じ範囲になります。改行などの制御文字は1バイトとして数えます。`¥`・`‾` は1バイト、マイナス記号（`−` U+2212）は2バイトとして数えます。これらはエンコーダーがそれぞれ `\`・`~`・`－`（U+FF0D）のバイト列で表すため、受け取った側でデコードすると別の文字になります。Shift_JIS で表せない文字（ユーザー定義領域の外字を含む）がある場合は `undefined` を返します。空文字の場合は `0` を返します。
@@ -89,7 +89,7 @@ getShiftJisByteLength('𠮷'); // undefined
 ### `isFullWidth`
 
 ```ts
-isFullWidth(str: string, options?: IsFullWidthOptions): boolean
+isFullWidth(data: string, options?: IsFullWidthOptions): boolean
 ```
 
 文字列が全角の文字だけで構成されているか判定します。Unicode の East Asian Width（UAX #11）が W（Wide）・F（Fullwidth）の文字を全角とします。絵文字も全角です。改行・タブなどの制御文字や、タイ文字などの全角・半角の区別が無い文字（N）はどちらでもないものとします。結合文字・ゼロ幅接合子・異体字セレクターは直前の文字の一部として扱います。空文字の場合は `false` を返します。
@@ -108,7 +108,7 @@ isFullWidth('①○', { ambiguousAs: 'half' }); // false
 ### `isHalfWidth`
 
 ```ts
-isHalfWidth(str: string, options?: IsHalfWidthOptions): boolean
+isHalfWidth(data: string, options?: IsHalfWidthOptions): boolean
 ```
 
 文字列が半角の文字だけで構成されているか判定します。East Asian Width が Na（Narrow）・H（Halfwidth）の文字を半角とします。それ以外の扱いとオプションは `isFullWidth` と同じです。デフォルトでは幅が曖昧な文字を全角として扱うため、`é` などを含む文字列は `false` になります。
@@ -122,7 +122,7 @@ isHalfWidth('café', { ambiguousAs: 'half' }); // true
 ### `isNormalizedEqual`
 
 ```ts
-isNormalizedEqual(str1: string, str2: string, options?: IsNormalizedEqualOptions): boolean
+isNormalizedEqual(left: string, right: string, options?: IsNormalizedEqualOptions): boolean
 ```
 
 2つの文字列を `normalizeString` で正規化してから、等しいか判定します。正規化の方法は `normalizeString` のオプションで指定します（何も指定しない場合は正規化しません）。
@@ -131,16 +131,16 @@ isNormalizedEqual(str1: string, str2: string, options?: IsNormalizedEqualOptions
 isNormalizedEqual('ＡＢＣ', 'abc', { ignoreWidth: true, ignoreCase: true }); // true
 ```
 
-| オプション     | 型                       | 説明                                 |
-| -------------- | ------------------------ | ------------------------------------ |
-| `rawFirst?`    | `boolean`                | `true` の場合、`str1` を正規化しない |
-| `rawSecond?`   | `boolean`                | `true` の場合、`str2` を正規化しない |
-| `ignore*` など | `NormalizeStringOptions` | `normalizeString` のオプション       |
+| オプション     | 型                       | 説明                                                                     |
+| -------------- | ------------------------ | ------------------------------------------------------------------------ |
+| `rawLeft?`     | `boolean`                | `true` の場合、`left` を正規化しない（正規化済みの値と比べるときに使う） |
+| `rawRight?`    | `boolean`                | `true` の場合、`right` を正規化しない                                    |
+| `ignore*` など | `NormalizeStringOptions` | `normalizeString` のオプション                                           |
 
 ### `isShiftJisDoubleByte`
 
 ```ts
-isShiftJisDoubleByte(str: string): boolean
+isShiftJisDoubleByte(data: string): boolean
 ```
 
 文字列が Shift_JIS の2バイト文字（JIS X 0208 の文字と、`①` などの Windows-31J の拡張文字）だけで構成されているか判定します。Shift_JIS の定義は `getShiftJisByteLength` と同じです。波ダッシュ（`〜` U+301C）は Windows-31J では表せないため、含まれる場合は `false` になります。マイナス記号（`−` U+2212）は全角のハイフンマイナス（`－` U+FF0D）のバイト列で表せるため、2バイト文字として扱います。空文字の場合は `false` を返します。
@@ -148,7 +148,7 @@ isShiftJisDoubleByte(str: string): boolean
 ### `isShiftJisSingleByte`
 
 ```ts
-isShiftJisSingleByte(str: string): boolean
+isShiftJisSingleByte(data: string): boolean
 ```
 
 文字列が Shift_JIS の1バイト文字（ASCII の表示可能な文字、半角カタカナ、`¥`、`‾`）だけで構成されているか判定します。制御文字は含みません。空文字の場合は `false` を返します。
@@ -156,7 +156,7 @@ isShiftJisSingleByte(str: string): boolean
 ### `normalizeString`
 
 ```ts
-normalizeString(str: string, options?: NormalizeStringOptions): string
+normalizeString(data: string, options?: NormalizeStringOptions): string
 ```
 
 全角・半角や大文字・小文字などの表記の揺れを無くし、検索や比較に使える形にします。どの違いを無くすかはオプションで指定します（何も指定しない場合は変換しません）。
@@ -195,7 +195,7 @@ normalizeString('㈱ｶﾞ', { ignoreCompatibility: true }); // '(株)ガ'
 ### `removeChouon`
 
 ```ts
-removeChouon(str: string): string
+removeChouon(data: string): string
 ```
 
 長音符（`ー`）を削除します。半角の長音符（`ｰ`）は対象外です。半角も削除する場合は、先に `toFullWidth` で全角にします。
@@ -203,7 +203,7 @@ removeChouon(str: string): string
 ### `removeLineBreaks`
 
 ```ts
-removeLineBreaks(str: string): string
+removeLineBreaks(data: string): string
 ```
 
 改行（CR、LF、CRLF、Unicode の行区切り U+2028・段落区切り U+2029）を削除します。
@@ -211,7 +211,7 @@ removeLineBreaks(str: string): string
 ### `removeSpaces`
 
 ```ts
-removeSpaces(str: string): string
+removeSpaces(data: string): string
 ```
 
 半角スペースと全角スペースを削除します。タブなどの他の空白文字も削除する場合は `removeWhitespace` を使います。
@@ -219,7 +219,7 @@ removeSpaces(str: string): string
 ### `removeWhitespace`
 
 ```ts
-removeWhitespace(str: string): string
+removeWhitespace(data: string): string
 ```
 
 改行以外の空白文字（半角・全角スペース、タブ、ノーブレークスペース、各種の幅のスペースなど）を削除します。改行の削除には `removeLineBreaks` を使います。
@@ -227,7 +227,7 @@ removeWhitespace(str: string): string
 ### `toFullWidth`
 
 ```ts
-toFullWidth(str: string, options?: ToFullWidthOptions): string
+toFullWidth(data: string, options?: ToFullWidthOptions): string
 ```
 
 半角の英字・数字・記号・スペース・カナを全角にします。カナは半角カナ全体（カタカナと、`｡`・`｢`・`｣`・`､`・`･`・`ｰ`・`ﾞ`・`ﾟ`）が対象です。`ﾜﾞ`・`ｦﾞ` は合成済みの文字（`ヷ`・`ヺ`）にせず、`ワ゛`・`ヲ゛` にします。
@@ -248,7 +248,7 @@ toFullWidth('abc 123', { keepNumber: true }); // 'ａｂｃ　123'
 ### `toHalfWidth`
 
 ```ts
-toHalfWidth(str: string, options?: ToHalfWidthOptions): string
+toHalfWidth(data: string, options?: ToHalfWidthOptions): string
 ```
 
 全角の英字・数字・記号・スペース・カナを半角にします。対象の文字とオプションは `toFullWidth` と同じです。半角の無い文字（`ヰ`・`ヵ`・`ヷ` など）はそのまま残します。
@@ -256,8 +256,8 @@ toHalfWidth(str: string, options?: ToHalfWidthOptions): string
 ### `toHiragana` / `toKatakana`
 
 ```ts
-toHiragana(str: string): string
-toKatakana(str: string): string
+toHiragana(data: string): string
+toKatakana(data: string): string
 ```
 
 カタカナをひらがなに（`toHiragana`）、ひらがなをカタカナに（`toKatakana`）します。全角のカナが対象です。半角カタカナも変換する場合は、先に `toFullWidth` で全角にします。`ヵ`・`ヶ`（「3ヶ月」のように助数詞として使われることが多いため）と、対応するひらがなの無い `ヷ`・`ヸ`・`ヹ`・`ヺ` は変換しません。
@@ -265,8 +265,8 @@ toKatakana(str: string): string
 ### `toHiraganaSeion` / `toKatakanaSeion`
 
 ```ts
-toHiraganaSeion(str: string, options?: ToHiraganaSeionOptions): string
-toKatakanaSeion(str: string, options?: ToKatakanaSeionOptions): string
+toHiraganaSeion(data: string, options?: ToHiraganaSeionOptions): string
+toKatakanaSeion(data: string, options?: ToKatakanaSeionOptions): string
 ```
 
 ひらがな（`toHiraganaSeion`）・カタカナ（`toKatakanaSeion`）の濁音・半濁音・促音・拗音を清音にします。濁音の踊り字（`ゞ`・`ヾ`）も清音の踊り字にします。全角のカナが対象で、半角カタカナと `ヷ`・`ヸ`・`ヹ`・`ヺ` は変換しません。
@@ -303,7 +303,7 @@ toNfkd(data: string): string
 ### `transformString`
 
 ```ts
-transformString(str: string, types: TransformationType[], options?: TransformStringOptions): string
+transformString(data: string, types: readonly TransformationType[], options?: TransformStringOptions): string
 ```
 
 `types` に指定した変換を、指定した順番に適用します。
@@ -332,8 +332,8 @@ transformString('hello world', [TransformationType.toPascalCase]); // 'HelloWorl
 ### `unifyChouon` / `unifyHyphens`
 
 ```ts
-unifyChouon(str: string, options?: UnifyChouonOptions): string
-unifyHyphens(str: string, options?: UnifyHyphensOptions): string
+unifyChouon(data: string, options?: UnifyChouonOptions): string
+unifyHyphens(data: string, options?: UnifyHyphensOptions): string
 ```
 
 長音とハイフンは同じような横線の記号で書かれることが多いため、直前の文字で見分けてそろえます。かな（全角のひらがな・カタカナと半角カタカナ。濁点・半濁点と踊り字を含む）の直後にある横線は長音、それ以外の横線はハイフンとみなします。2つの関数はちょうど裏表の関係で、どちらを先に適用しても、両方を適用しても結果は同じです。
@@ -358,12 +358,12 @@ unifyHyphens('サーバ 1－2', { always: true }); // 'サ-バ 1-2'
 ### `unifySpaces` など
 
 ```ts
-unifySpaces(str: string, options?: UnifySpacesOptions): string
-unifyLineBreaks(str: string, options?: UnifyLineBreaksOptions): string
-unifyTildes(str: string, options?: UnifyTildesOptions): string
-unifyMiddleDots(str: string, options?: UnifyMiddleDotsOptions): string
-unifyDoubleQuotes(str: string, options?: UnifyDoubleQuotesOptions): string
-unifySingleQuotes(str: string, options?: UnifySingleQuotesOptions): string
+unifySpaces(data: string, options?: UnifySpacesOptions): string
+unifyLineBreaks(data: string, options?: UnifyLineBreaksOptions): string
+unifyTildes(data: string, options?: UnifyTildesOptions): string
+unifyMiddleDots(data: string, options?: UnifyMiddleDotsOptions): string
+unifyDoubleQuotes(data: string, options?: UnifyDoubleQuotesOptions): string
+unifySingleQuotes(data: string, options?: UnifySingleQuotesOptions): string
 ```
 
 同じ種類の別の文字を、1つの文字にそろえます。前後の文字は見ません。対象の文字は、関数ごとの定数で確認できます。
@@ -391,17 +391,26 @@ unifyDoubleQuotes('“a”'); // '"a"'
 
 ### 定数
 
-| 定数                    | 説明                                    |
-| ----------------------- | --------------------------------------- |
-| `TransformationType`    | `transformString` に指定する変換の種類  |
-| `CHOUON_VARIANTS`       | `unifyChouon` が長音として扱う文字      |
-| `HYPHEN_VARIANTS`       | `unifyHyphens` がハイフンとして扱う文字 |
-| `SPACE_VARIANTS`        | `unifySpaces` が統一する文字            |
-| `LINE_BREAK_VARIANTS`   | `unifyLineBreaks` が統一する文字        |
-| `TILDE_VARIANTS`        | `unifyTildes` が統一する文字            |
-| `MIDDLE_DOT_VARIANTS`   | `unifyMiddleDots` が統一する文字        |
-| `DOUBLE_QUOTE_VARIANTS` | `unifyDoubleQuotes` が統一する文字      |
-| `SINGLE_QUOTE_VARIANTS` | `unifySingleQuotes` が統一する文字      |
+| 定数                                                                                                                  | 説明                                                                                  |
+| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `TransformationType`                                                                                                  | `transformString` に指定する変換の種類                                                |
+| `CHOUON_VARIANTS`                                                                                                     | `unifyChouon` が長音として扱う文字                                                    |
+| `HYPHEN_VARIANTS`                                                                                                     | `unifyHyphens` がハイフンとして扱う文字                                               |
+| `SPACE_VARIANTS`                                                                                                      | `unifySpaces` が統一する文字                                                          |
+| `LINE_BREAK_VARIANTS`                                                                                                 | `unifyLineBreaks` が統一する文字                                                      |
+| `TILDE_VARIANTS`                                                                                                      | `unifyTildes` が統一する文字                                                          |
+| `MIDDLE_DOT_VARIANTS`                                                                                                 | `unifyMiddleDots` が統一する文字                                                      |
+| `DOUBLE_QUOTE_VARIANTS`                                                                                               | `unifyDoubleQuotes` が統一する文字                                                    |
+| `SINGLE_QUOTE_VARIANTS`                                                                                               | `unifySingleQuotes` が統一する文字                                                    |
+| `TO_FULL_WIDTH`                                                                                                       | `toFullWidth` の変換テーブル（下の5つをまとめたもの）                                 |
+| `TO_FULL_WIDTH_ALPHABET`・`TO_FULL_WIDTH_NUMBER`・`TO_FULL_WIDTH_SYMBOL`・`TO_FULL_WIDTH_SPACE`・`TO_FULL_WIDTH_KANA` | 英字・数字・記号・スペース・カタカナを全角にする変換テーブル                          |
+| `TO_HALF_WIDTH`                                                                                                       | `toHalfWidth` の変換テーブル（下の5つをまとめたもの）                                 |
+| `TO_HALF_WIDTH_ALPHABET`・`TO_HALF_WIDTH_NUMBER`・`TO_HALF_WIDTH_SYMBOL`・`TO_HALF_WIDTH_SPACE`・`TO_HALF_WIDTH_KANA` | 英字・数字・記号・スペース・カタカナを半角にする変換テーブル                          |
+| `TO_HIRAGANA`・`TO_KATAKANA`                                                                                          | `toHiragana`・`toKatakana` の変換テーブル                                             |
+| `TO_HIRAGANA_SEION`・`TO_KATAKANA_SEION`                                                                              | `toHiraganaSeion`・`toKatakanaSeion` の変換テーブル（下の3つをまとめたもの）          |
+| `TO_HIRAGANA_SEION_FROM_DAKUON`・`TO_HIRAGANA_SEION_FROM_SOKUON`・`TO_HIRAGANA_SEION_FROM_YOUON`                      | ひらがなの濁音・促音・拗音を清音にする変換テーブル                                    |
+| `TO_KATAKANA_SEION_FROM_DAKUON`・`TO_KATAKANA_SEION_FROM_SOKUON`・`TO_KATAKANA_SEION_FROM_YOUON`                      | カタカナの濁音・促音・拗音を清音にする変換テーブル                                    |
+| `REMOVE_CHOUON`・`REMOVE_LINE_BREAKS`・`REMOVE_SPACES`・`REMOVE_WHITESPACE`                                           | `removeChouon`・`removeLineBreaks`・`removeSpaces`・`removeWhitespace` の変換テーブル |
 
 ### 型
 

@@ -6,12 +6,12 @@
  * 例:
  * - `か` + `゛` → `が`
  *
- * @param str
+ * @param data
  * @returns
  */
-export default function toNfc(str: string): string {
-  if (!str) {
-    return str;
+export default function toNfc(data: string): string {
+  if (!data) {
+    return data;
   }
-  return str.normalize('NFC');
+  return data.normalize('NFC');
 }

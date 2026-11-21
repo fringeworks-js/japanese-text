@@ -21,18 +21,22 @@ describe('isNormalizedEqual', () => {
     );
   });
 
-  it('rawFirst: trueでvalue1は正規化しない', () => {
+  it('rawLeft: true で left は正規化しない', () => {
     expect(
-      isNormalizedEqual('Hello', 'hello', { ignoreCase: true, rawFirst: true }),
+      isNormalizedEqual('Hello', 'hello', { ignoreCase: true, rawLeft: true }),
     ).toBe(false);
   });
 
-  it('rawSecond: trueでvalue2は正規化しない', () => {
+  it('rawRight: true で right は正規化しない', () => {
     expect(
-      isNormalizedEqual('hello', 'Hello', {
-        ignoreCase: true,
-        rawSecond: true,
-      }),
+      isNormalizedEqual('hello', 'Hello', { ignoreCase: true, rawRight: true }),
     ).toBe(false);
+  });
+
+  it('正規化済みの値と比べるときは、その側を正規化しない', () => {
+    // 正規化済みの値（ignoreCase で小文字になったもの）と比べる
+    expect(
+      isNormalizedEqual('HELLO', 'hello', { ignoreCase: true, rawRight: true }),
+    ).toBe(true);
   });
 });
